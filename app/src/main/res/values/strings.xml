@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Aplicacao Grajas</string>
+    <string name="title_activity_act_main">Home</string>
+    <string name="title_activity_act_cad_cliente">Cliente</string>
+    <string name="lbl_nome">Nome</string>
+    <string name="lbl_endereco">Endereço</string>
+    <string name="lbl_email">Email</string>
+    <string name="lbl_telefone">Telefone</string>
+    <string name="lbl_ok">Ok</string>
+    <string name="item_menu_ok">OK</string>
+    <string name="menu_item_cancelar">Cancelar</string>
+    <string name="title_activity_act_lista_cliente">ActListaCliente</string>
+    <string name="title_activity_login">Aplicação Granja</string>
+    <string name="title_activity_main">Início</string>
+    <string name="title_activity_postura_lista">Lista Granja Postura</string>
+    <string name="title_activity_editar_postura">Postura Edição</string>
+    <string name="title_activity_ovos">Ovos</string>
+    <string name="title_activity_editar_ovos">EditarOvosActivity</string>
+    <string name="title_activity_incubatorio">IncubatorioActivity</string>
+    <string name="title_activity_corte">CorteActivity</string>
+    <string name="title_activity_racoes">RacoesActivity</string>
+    <string name="title_activity_vacinas">VacinasActivity</string>
+    <string name="title_activity_financeiro">FinanceiroActivity</string>
+    <string name="title_activity_editar_corte">editarCorteActivity</string>
+    <string name="title_activity_editar_financeiro">EditarFinanceiroActivity</string>
+    <string name="title_activity_editar_incubatorio">EditarIncubatorioActivity</string>
+    <string name="title_activity_editar_racoes">EditarRacoesActivity</string>
+    <string name="title_activity_editar_vacinas">EditarVacinasActivity</string>
+</resources>
