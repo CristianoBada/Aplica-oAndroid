@@ -8,4 +8,175 @@
     tools:context=".Forms.EditarCorteActivity"
     tools:showIn="@layout/activity_editar_corte">
 
+    <TextView
+        android:id="@+id/textView21"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="Tipo de ave:"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinnerTipoAveCorte"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="@+id/textView21"
+        app:layout_constraintStart_toStartOf="@+id/textView21"
+        app:layout_constraintTop_toBottomOf="@+id/textView21" />
+
+    <TextView
+        android:id="@+id/textView22"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Quantidade:"
+        app:layout_constraintEnd_toEndOf="@+id/spinnerTipoAveCorte"
+        app:layout_constraintStart_toStartOf="@+id/spinnerTipoAveCorte"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerTipoAveCorte" />
+
+    <EditText
+        android:id="@+id/editTextQuantidadeCorte"
+        android:layout_width="0dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="4dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="@+id/textView22"
+        app:layout_constraintStart_toStartOf="@+id/textView22"
+        app:layout_constraintTop_toBottomOf="@+id/textView22" />
+
+    <TextView
+        android:id="@+id/textView23"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Maximo de aves:"
+        app:layout_constraintEnd_toEndOf="@+id/editTextQuantidadeCorte"
+        app:layout_constraintStart_toStartOf="@+id/editTextQuantidadeCorte"
+        app:layout_constraintTop_toBottomOf="@+id/editTextQuantidadeCorte" />
+
+    <EditText
+        android:id="@+id/editTextMaxCorte"
+        android:layout_width="0dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="4dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="@+id/textView23"
+        app:layout_constraintStart_toStartOf="@+id/textView23"
+        app:layout_constraintTop_toBottomOf="@+id/textView23" />
+
+    <TextView
+        android:id="@+id/textView24"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Mortalidade:"
+        app:layout_constraintEnd_toEndOf="@+id/editTextMaxCorte"
+        app:layout_constraintStart_toStartOf="@+id/editTextMaxCorte"
+        app:layout_constraintTop_toBottomOf="@+id/editTextMaxCorte" />
+
+    <EditText
+        android:id="@+id/editTextMortalidadeCorte"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="4dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="@+id/textView24"
+        app:layout_constraintStart_toStartOf="@+id/textView24"
+        app:layout_constraintTop_toBottomOf="@+id/textView24" />
+
+    <TextView
+        android:id="@+id/textView25"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Data de entrada:"
+        app:layout_constraintEnd_toEndOf="@+id/editTextMortalidadeCorte"
+        app:layout_constraintStart_toStartOf="@+id/editTextMortalidadeCorte"
+        app:layout_constraintTop_toBottomOf="@+id/editTextMortalidadeCorte" />
+
+    <EditText
+        android:id="@+id/editTextDataEntradaCorte"
+        android:layout_width="0dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="4dp"
+        android:ems="10"
+        android:inputType="date"
+        app:layout_constraintEnd_toEndOf="@+id/textView25"
+        app:layout_constraintStart_toStartOf="@+id/textView25"
+        app:layout_constraintTop_toBottomOf="@+id/textView25" />
+
+    <TextView
+        android:id="@+id/textView26"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Data de saida:"
+        app:layout_constraintEnd_toEndOf="@+id/editTextDataEntradaCorte"
+        app:layout_constraintStart_toStartOf="@+id/editTextDataEntradaCorte"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDataEntradaCorte" />
+
+    <EditText
+        android:id="@+id/editTextDataSaidaCorte"
+        android:layout_width="0dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="4dp"
+        android:ems="10"
+        android:inputType="date"
+        app:layout_constraintEnd_toEndOf="@+id/textView26"
+        app:layout_constraintStart_toStartOf="@+id/textView26"
+        app:layout_constraintTop_toBottomOf="@+id/textView26" />
+
+    <TextView
+        android:id="@+id/textView27"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Observasão:"
+        app:layout_constraintEnd_toEndOf="@+id/editTextDataSaidaCorte"
+        app:layout_constraintStart_toStartOf="@+id/editTextDataSaidaCorte"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDataSaidaCorte" />
+
+    <EditText
+        android:id="@+id/editTextComentarioCorte"
+        android:layout_width="0dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="4dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/textView27"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="@+id/textView27"
+        app:layout_constraintTop_toBottomOf="@+id/textView27" />
+
+    <Button
+        android:id="@+id/buttonNovoCorte"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:onClick="salvarCorte"
+        android:text="@string/str_Salvar"
+        app:layout_constraintStart_toStartOf="@+id/editTextComentarioCorte"
+        app:layout_constraintTop_toBottomOf="@+id/editTextComentarioCorte" />
+
+    <Button
+        android:id="@+id/buttonExcluirCorte"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:onClick="excluirCorte"
+        android:text="@string/str_Excluir"
+        app:layout_constraintStart_toEndOf="@+id/buttonNovoCorte"
+        app:layout_constraintTop_toBottomOf="@+id/editTextComentarioCorte" />
 </android.support.constraint.ConstraintLayout>
