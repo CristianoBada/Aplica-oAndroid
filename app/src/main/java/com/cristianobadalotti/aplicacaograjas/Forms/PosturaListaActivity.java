@@ -12,6 +12,7 @@ import android.view.View;
 
 import com.cristianobadalotti.aplicacaograjas.Adapters.PosturaAdapter;
 import com.cristianobadalotti.aplicacaograjas.Entidades.Postura;
+import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.PosturaBD;
 import com.cristianobadalotti.aplicacaograjas.R;
 
 public class PosturaListaActivity extends AppCompatActivity {
@@ -55,7 +56,7 @@ public class PosturaListaActivity extends AppCompatActivity {
     }
 
     private void CreateAdapter() {
-        PosturaAdapter posturaAdapter = new PosturaAdapter(new Postura().getLista());
+        PosturaAdapter posturaAdapter = new PosturaAdapter(new PosturaBD().getLista());
 
         dadosPostura.setAdapter(posturaAdapter);
     }

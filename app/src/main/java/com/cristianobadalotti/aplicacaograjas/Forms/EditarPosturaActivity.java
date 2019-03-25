@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.cristianobadalotti.aplicacaograjas.Entidades.Postura;
 import com.cristianobadalotti.aplicacaograjas.Entidades.TipoAve;
+import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.PosturaBD;
 import com.cristianobadalotti.aplicacaograjas.R;
 import com.cristianobadalotti.aplicacaograjas.Utilitarios.Calendario;
 import com.cristianobadalotti.aplicacaograjas.Utilitarios.MetodosComuns;
@@ -116,10 +117,11 @@ public class EditarPosturaActivity extends AppCompatActivity {
             this.postura.setDatasaida(this.editDataSaida.getText().toString());
             this.postura.setDataentrada(this.editDataEntrada.getText().toString());
             this.postura.setComentario(this.editObservacao.getText().toString());
-            this.postura.salvar();
+            PosturaBD posturaBD = new PosturaBD();
+            posturaBD.salvar(this.postura);
 
-            Toast.makeText(this, this.postura.get_menssagem(), Toast.LENGTH_LONG).show();
-            if (postura.is_status()) {
+            Toast.makeText(this, posturaBD.get_menssagem(), Toast.LENGTH_LONG).show();
+            if (posturaBD.is_status()) {
                 finish();
             }
         }
@@ -207,7 +209,8 @@ public class EditarPosturaActivity extends AppCompatActivity {
     }
 
     public void excluirPostura(View view) {
-        this.postura.apagar();
+        PosturaBD posturaBD = new PosturaBD();
+        posturaBD.apagar(this.postura);
         finish();
     }
 }

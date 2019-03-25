@@ -24,4 +24,8 @@ public class _Default {
     public void set_status(boolean _status) {
         this._status = _status;
     }
+
+    public boolean get_status() {
+        return _status;
+    }
 }
