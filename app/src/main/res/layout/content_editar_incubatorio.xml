@@ -8,4 +8,174 @@
     tools:context=".Forms.EditarIncubatorioActivity"
     tools:showIn="@layout/activity_editar_incubatorio">
 
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="Lote de Ovos:"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextLoteOvosIncubatorio"
+        android:layout_width="0dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="4dp"
+        android:ems="10"
+        app:layout_constraintEnd_toEndOf="@+id/textView14"
+        app:layout_constraintStart_toStartOf="@+id/textView14"
+        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Temperatura:"
+        app:layout_constraintEnd_toEndOf="@+id/editTextLoteOvosIncubatorio"
+        app:layout_constraintStart_toStartOf="@+id/editTextLoteOvosIncubatorio"
+        app:layout_constraintTop_toBottomOf="@+id/editTextLoteOvosIncubatorio" />
+
+    <EditText
+        android:id="@+id/editTextTemperaturaIncubatorio"
+        android:layout_width="0dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="4dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="@+id/textView15"
+        app:layout_constraintStart_toStartOf="@+id/textView15"
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Umidade:"
+        app:layout_constraintEnd_toEndOf="@+id/editTextTemperaturaIncubatorio"
+        app:layout_constraintStart_toStartOf="@+id/editTextTemperaturaIncubatorio"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTemperaturaIncubatorio" />
+
+    <EditText
+        android:id="@+id/editTextUmidadeIncubatorio"
+        android:layout_width="0dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="4dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="@+id/textView16"
+        app:layout_constraintStart_toStartOf="@+id/textView16"
+        app:layout_constraintTop_toBottomOf="@+id/textView16" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Tempo para chocar:"
+        app:layout_constraintEnd_toEndOf="@+id/editTextUmidadeIncubatorio"
+        app:layout_constraintStart_toStartOf="@+id/editTextUmidadeIncubatorio"
+        app:layout_constraintTop_toBottomOf="@+id/editTextUmidadeIncubatorio" />
+
+    <EditText
+        android:id="@+id/editTextTempoIncubatorio"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="4dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="@+id/textView17"
+        app:layout_constraintStart_toStartOf="@+id/textView17"
+        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Data de inicio:"
+        app:layout_constraintEnd_toEndOf="@+id/editTextTempoIncubatorio"
+        app:layout_constraintStart_toStartOf="@+id/editTextTempoIncubatorio"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTempoIncubatorio" />
+
+    <EditText
+        android:id="@+id/editTextDataIncubatorio"
+        android:layout_width="0dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="4dp"
+        android:ems="10"
+        android:inputType="date"
+        app:layout_constraintEnd_toEndOf="@+id/textView18"
+        app:layout_constraintStart_toStartOf="@+id/textView18"
+        app:layout_constraintTop_toBottomOf="@+id/textView18" />
+
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Mortalidade:"
+        app:layout_constraintEnd_toEndOf="@+id/editTextDataIncubatorio"
+        app:layout_constraintStart_toStartOf="@+id/editTextDataIncubatorio"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDataIncubatorio" />
+
+    <EditText
+        android:id="@+id/editTextMortalidadeIncubatorio"
+        android:layout_width="0dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="4dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="@+id/textView19"
+        app:layout_constraintStart_toStartOf="@+id/textView19"
+        app:layout_constraintTop_toBottomOf="@+id/textView19" />
+
+    <TextView
+        android:id="@+id/textView20"
+        android:layout_width="0dp"
+        android:layout_height="23dp"
+        android:layout_marginTop="8dp"
+        android:text="Tipo de ave:"
+        app:layout_constraintEnd_toEndOf="@+id/editTextMortalidadeIncubatorio"
+        app:layout_constraintStart_toStartOf="@+id/editTextMortalidadeIncubatorio"
+        app:layout_constraintTop_toBottomOf="@+id/editTextMortalidadeIncubatorio" />
+
+    <Spinner
+        android:id="@+id/spinnerTipoAveIncubatorio"
+        android:layout_width="368dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="@+id/textView20"
+        app:layout_constraintStart_toStartOf="@+id/textView20"
+        app:layout_constraintTop_toBottomOf="@+id/textView20" />
+
+    <Button
+        android:id="@+id/buttonSalvarIncubatorio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:onClick="salvarIncubatorio"
+        android:text="@string/str_Salvar"
+        app:layout_constraintStart_toStartOf="@+id/spinnerTipoAveIncubatorio"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerTipoAveIncubatorio" />
+
+    <Button
+        android:id="@+id/buttonExcluirIncubatorio"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:onClick="excluirIncubatorio"
+        android:text="@string/str_Excluir"
+        app:layout_constraintStart_toEndOf="@+id/buttonSalvarIncubatorio"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerTipoAveIncubatorio" />
+
 </android.support.constraint.ConstraintLayout>

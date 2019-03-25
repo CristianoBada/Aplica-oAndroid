@@ -26,4 +26,7 @@
     <string name="title_activity_editar_incubatorio">EditarIncubatorioActivity</string>
     <string name="title_activity_editar_racoes">EditarRacoesActivity</string>
     <string name="title_activity_editar_vacinas">EditarVacinasActivity</string>
+    <string name="str_Novo">NOVO</string>
+    <string name="str_Salvar">SALVAR</string>
+    <string name="str_Excluir">EXCLUIR</string>
 </resources>
