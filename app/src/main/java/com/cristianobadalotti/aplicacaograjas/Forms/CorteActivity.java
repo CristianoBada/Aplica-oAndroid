@@ -3,8 +3,6 @@ package com.cristianobadalotti.aplicacaograjas.Forms;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.cristianobadalotti.aplicacaograjas.Adapters.CorteAdapter;
-import com.cristianobadalotti.aplicacaograjas.Entidades.Corte;
+import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.CorteBD;
 import com.cristianobadalotti.aplicacaograjas.R;
 
 public class CorteActivity extends AppCompatActivity {
@@ -57,7 +55,7 @@ public class CorteActivity extends AppCompatActivity {
     }
 
     private void CreateAdapter() {
-        CorteAdapter corteAdapter = new CorteAdapter(new Corte().getLista());
+        CorteAdapter corteAdapter = new CorteAdapter(new CorteBD().getLista());
 
         dadosCorte.setAdapter(corteAdapter);
     }

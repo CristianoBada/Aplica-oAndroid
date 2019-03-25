@@ -4,9 +4,6 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -19,12 +16,11 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.cristianobadalotti.aplicacaograjas.Entidades.Corte;
-import com.cristianobadalotti.aplicacaograjas.Entidades.Postura;
 import com.cristianobadalotti.aplicacaograjas.Entidades.TipoAve;
+import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.CorteBD;
 import com.cristianobadalotti.aplicacaograjas.R;
 import com.cristianobadalotti.aplicacaograjas.Utilitarios.Calendario;
 import com.cristianobadalotti.aplicacaograjas.Utilitarios.MetodosComuns;
-import com.cristianobadalotti.aplicacaograjas.Utilitarios.Validacoes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,10 +118,11 @@ public class EditarCorteActivity extends AppCompatActivity {
             this.corte.setDataEntrada(this.editDataEntrada.getText().toString());
             this.corte.setComentario(this.editObservacao.getText().toString());
             this.corte.setMortalidade(Integer.parseInt(this.editMortalidade.getText().toString()));
-            this.corte.salvar();
+            CorteBD corteBD = new CorteBD();
+            corteBD.salvar(this.corte);
 
-            Toast.makeText(this, this.corte.get_menssagem(), Toast.LENGTH_LONG).show();
-            if (corte.is_status()) {
+            Toast.makeText(this, corteBD.get_menssagem(), Toast.LENGTH_LONG).show();
+            if (corteBD.is_status()) {
                 finish();
             }
         }
@@ -215,7 +212,7 @@ public class EditarCorteActivity extends AppCompatActivity {
     }
 
     public void excluirCorte(View view) {
-        this.corte.apagar();
+        new CorteBD().apagar(this.corte);
         finish();
     }
 }

@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.cristianobadalotti.aplicacaograjas.Adapters.PosturaAdapter;
-import com.cristianobadalotti.aplicacaograjas.Entidades.Postura;
 import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.PosturaBD;
 import com.cristianobadalotti.aplicacaograjas.R;
 

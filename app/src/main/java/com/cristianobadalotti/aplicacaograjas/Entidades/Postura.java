@@ -1,10 +1,6 @@
 package com.cristianobadalotti.aplicacaograjas.Entidades;
 
-import com.cristianobadalotti.aplicacaograjas.Banco.BD;
-
 import java.io.Serializable;
-import java.sql.ResultSet;
-import java.util.ArrayList;
 
 public class Postura implements Serializable {
     private int codigoPostura;
