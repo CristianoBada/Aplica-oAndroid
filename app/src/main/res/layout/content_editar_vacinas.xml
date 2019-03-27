@@ -8,4 +8,92 @@
     tools:context=".Forms.EditarVacinasActivity"
     tools:showIn="@layout/activity_editar_vacinas">
 
+    <TextView
+        android:id="@+id/textView28"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="Tipo de tratamento:"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextTipoVacina"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/textView28"
+        app:layout_constraintStart_toStartOf="@+id/textView28"
+        app:layout_constraintTop_toBottomOf="@+id/textView28" />
+
+    <TextView
+        android:id="@+id/textView31"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Data:"
+        app:layout_constraintEnd_toEndOf="@+id/editTextTipoVacina"
+        app:layout_constraintStart_toStartOf="@+id/editTextTipoVacina"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTipoVacina" />
+
+    <EditText
+        android:id="@+id/editTextDataVacina"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="date"
+        app:layout_constraintEnd_toEndOf="@+id/textView31"
+        app:layout_constraintStart_toStartOf="@+id/textView31"
+        app:layout_constraintTop_toBottomOf="@+id/textView31" />
+
+    <TextView
+        android:id="@+id/textView32"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Observações:"
+        app:layout_constraintEnd_toEndOf="@+id/editTextDataVacina"
+        app:layout_constraintStart_toStartOf="@+id/editTextDataVacina"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDataVacina" />
+
+    <EditText
+        android:id="@+id/editTextDetalheVacina"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/textView32"
+        app:layout_constraintStart_toStartOf="@+id/textView32"
+        app:layout_constraintTop_toBottomOf="@+id/textView32" />
+
+    <Button
+        android:id="@+id/buttonSalvarVacina"
+        android:layout_width="0dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="8dp"
+        android:onClick="salvarVacina"
+        android:text="@string/str_Salvar"
+        app:layout_constraintStart_toStartOf="@+id/editTextDetalheVacina"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDetalheVacina" />
+
+    <Button
+        android:id="@+id/buttonExcluirVacina"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:onClick="excluirVacina"
+        android:text="@string/str_Excluir"
+        app:layout_constraintStart_toEndOf="@+id/buttonSalvarVacina"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDetalheVacina" />
 </android.support.constraint.ConstraintLayout>

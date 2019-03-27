@@ -50,7 +50,7 @@ public class VacinaBD extends _Default {
         String comando = "";
         if (vacina.getCodigoVacina() == -1) {
             comando = String.format("INSERT INTO vacina (data_tratamento, detalhe, tipo_tratamento) " +
-                            "VALUES ('%s', '%s', '%s', %f);",
+                            "VALUES ('%s', '%s', '%s');",
                     vacina.getDataTratamento(), vacina.getDetalhe(), vacina.getTipoTratamento());
         } else {
             comando = String.format("UPDATE vacina " +
