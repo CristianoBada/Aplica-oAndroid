@@ -62,7 +62,7 @@ public class EditarCorteActivity extends AppCompatActivity {
         calendario = new Calendario();
 
         spinnerTipoAve = (Spinner) findViewById(R.id.spinnerTipoAveCorte);
-        lista = new TipoAveBD().getListaAves();
+        lista = new TipoAveBD().getListaString();
         List<String> list = lista;
         tipoAve = lista.get(0);
 
@@ -141,7 +141,7 @@ public class EditarCorteActivity extends AppCompatActivity {
                 this.editDataSaida.setText(corte.getDataSaida());
                 this.editDataEntrada.setText(corte.getDataSaida());
                 this.editObservacao.setText(corte.getComentario());
-                this.spinnerTipoAve.setSelection(MetodosComuns.achaPosicao(new TipoAveBD().getListaAves(), corte.getTipoAve()));
+                this.spinnerTipoAve.setSelection(MetodosComuns.achaPosicao(new TipoAveBD().getListaString(), corte.getTipoAve()));
                 this.editMortalidade.setText(this.corte.getMortalidade()+"");
             } else {
                 opcaoExcluir();
@@ -213,7 +213,7 @@ public class EditarCorteActivity extends AppCompatActivity {
     }
 
     public void excluirCorte(View view) {
-        new CorteBD().apagar(this.corte);
+        new CorteBD().apagar(this.corte.getCodigoCorte());
         finish();
     }
 }

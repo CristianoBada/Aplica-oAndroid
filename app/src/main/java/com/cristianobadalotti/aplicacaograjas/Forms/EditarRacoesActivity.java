@@ -155,7 +155,7 @@ public class EditarRacoesActivity extends AppCompatActivity {
     }
 
     public void excluirRacao(View view) {
-        new RacaoBD().apagar(this.racao);
+        new RacaoBD().apagar(this.racao.getCodigoRacao());
         finish();
     }
 }

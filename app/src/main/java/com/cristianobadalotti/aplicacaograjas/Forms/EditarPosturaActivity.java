@@ -17,7 +17,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.cristianobadalotti.aplicacaograjas.Entidades.Postura;
-import com.cristianobadalotti.aplicacaograjas.Entidades.TipoAve;
 import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.PosturaBD;
 import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.TipoAveBD;
 import com.cristianobadalotti.aplicacaograjas.R;
@@ -63,7 +62,7 @@ public class EditarPosturaActivity extends AppCompatActivity {
         calendario = new Calendario();
 
         spinnerTipoAve = (Spinner) findViewById(R.id.spinnerTipoAve);
-        lista = new TipoAveBD().getListaAves();
+        lista = new TipoAveBD().getListaString();
         List<String> list = lista;
         tipoAve = lista.get(0);
 
@@ -140,7 +139,7 @@ public class EditarPosturaActivity extends AppCompatActivity {
                 this.editDataSaida.setText(postura.getDatasaida());
                 this.editDataEntrada.setText(postura.getDatasaida());
                 this.editObservacao.setText(postura.getComentario());
-                this.spinnerTipoAve.setSelection(MetodosComuns.achaPosicao(new TipoAveBD().getListaAves(), postura.getTipoAve()));
+                this.spinnerTipoAve.setSelection(MetodosComuns.achaPosicao(new TipoAveBD().getListaString(), postura.getTipoAve()));
             } else {
                 opcaoExcluir();
             }
@@ -211,7 +210,7 @@ public class EditarPosturaActivity extends AppCompatActivity {
 
     public void excluirPostura(View view) {
         PosturaBD posturaBD = new PosturaBD();
-        posturaBD.apagar(this.postura);
+        posturaBD.apagar(this.postura.getCodigoPostura());
         finish();
     }
 }

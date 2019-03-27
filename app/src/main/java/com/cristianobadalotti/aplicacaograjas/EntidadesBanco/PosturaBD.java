@@ -44,8 +44,8 @@ public class PosturaBD extends _Default {
         return lista;
     }
 
-    public void apagar(Postura postura) {
-        String comando = String.format("DELETE FROM postura WHERE codigo_postura=%d;", postura.getCodigoPostura());
+    public void apagar(int codigo) {
+        String comando = String.format("DELETE FROM postura WHERE codigo_postura=%d;", codigo);
 
         BD bd = new BD();
         bd.execute(comando);

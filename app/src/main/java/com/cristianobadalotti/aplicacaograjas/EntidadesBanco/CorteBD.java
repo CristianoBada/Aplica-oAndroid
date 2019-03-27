@@ -41,8 +41,8 @@ public class CorteBD  extends _Default {
         return lista;
     }
 
-    public void apagar(Corte corte) {
-        String comando = String.format("DELETE FROM corte WHERE codigo_corte=%d;", corte.getCodigoCorte());
+    public void apagar(int codigo) {
+        String comando = String.format("DELETE FROM corte WHERE codigo_corte=%d;", codigo);
 
         BD bd = new BD();
         bd.execute(comando);

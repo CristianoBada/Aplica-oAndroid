@@ -57,7 +57,7 @@ public class EditarOvosActivity extends AppCompatActivity {
         calendario = new Calendario();
 
         spinnerTipoAve = (Spinner) findViewById(R.id.spinnerTipoAveOvos);
-        lista = new TipoAveBD().getListaAves();
+        lista = new TipoAveBD().getListaString();
         List<String> list = lista;
         tipoAve = lista.get(0);
 
@@ -123,7 +123,7 @@ public class EditarOvosActivity extends AppCompatActivity {
                 this.editQuantidade.setText(ovos.getQuantidade()+"");
                 this.editData.setText(ovos.getData());
                 this.editLote.setText(ovos.getLote());
-                this.spinnerTipoAve.setSelection(MetodosComuns.achaPosicao(new TipoAveBD().getListaAves(), ovos.getTipoAve()));
+                this.spinnerTipoAve.setSelection(MetodosComuns.achaPosicao(new TipoAveBD().getListaString(), ovos.getTipoAve()));
             } else {
                 opcaoExcluirOvos();
             }

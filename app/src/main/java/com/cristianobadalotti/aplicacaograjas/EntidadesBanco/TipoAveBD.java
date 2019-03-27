@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class TipoAveBD extends _Default {
-    public ArrayList<String> getListaAves() {
+    public ArrayList<String> getListaString() {
         BD bd = new BD();
         ArrayList<String> lista = new ArrayList<>();
 

@@ -61,7 +61,7 @@ public class EditarIncubatorioActivity extends AppCompatActivity {
         calendario = new Calendario();
 
         spinnerTipoAve = (Spinner) findViewById(R.id.spinnerTipoAveIncubatorio);
-        lista = new TipoAveBD().getListaAves();
+        lista = new TipoAveBD().getListaString();
         List<String> list = lista;
         tipoAve = lista.get(0);
 
@@ -133,7 +133,7 @@ public class EditarIncubatorioActivity extends AppCompatActivity {
                 this.editTemperatura.setText(incubatorio.getTemperatura()+"");
                 this.editTempo.setText(incubatorio.getTempoChocar()+"");
                 this.editUmidade.setText(incubatorio.getUmidade()+"");
-                this.spinnerTipoAve.setSelection(MetodosComuns.achaPosicao(new TipoAveBD().getListaAves(), incubatorio.getTipoAve()));
+                this.spinnerTipoAve.setSelection(MetodosComuns.achaPosicao(new TipoAveBD().getListaString(), incubatorio.getTipoAve()));
             } else {
                 opcaoExcluirIncubatorio();
             }

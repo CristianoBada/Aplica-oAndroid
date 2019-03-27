@@ -37,8 +37,8 @@ public class RacaoBD extends _Default {
         return lista;
     }
 
-    public void apagar(Racao racao) {
-        String comando = String.format("DELETE FROM racao WHERE codigo_racao=%d;", racao.getCodigoRacao());
+    public void apagar(int codigo) {
+        String comando = String.format("DELETE FROM racao WHERE codigo_racao=%d;", codigo);
 
         BD bd = new BD();
         bd.execute(comando);
