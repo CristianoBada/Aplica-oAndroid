@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.cristianobadalotti.aplicacaograjas.Adapters.OvosAdapter;
-import com.cristianobadalotti.aplicacaograjas.Entidades.Ovos;
+import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.OvosBD;
 import com.cristianobadalotti.aplicacaograjas.R;
 
 public class OvosListaActivity extends AppCompatActivity {
@@ -55,7 +55,7 @@ public class OvosListaActivity extends AppCompatActivity {
     }
 
     private void CreateAdapter() {
-        OvosAdapter ovosAdapter = new OvosAdapter(new Ovos().getLista());
+        OvosAdapter ovosAdapter = new OvosAdapter(new OvosBD().getLista());
 
         dadosOvos.setAdapter(ovosAdapter);
     }

@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.cristianobadalotti.aplicacaograjas.Entidades.Corte;
 import com.cristianobadalotti.aplicacaograjas.Entidades.TipoAve;
 import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.CorteBD;
+import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.TipoAveBD;
 import com.cristianobadalotti.aplicacaograjas.R;
 import com.cristianobadalotti.aplicacaograjas.Utilitarios.Calendario;
 import com.cristianobadalotti.aplicacaograjas.Utilitarios.MetodosComuns;
@@ -61,7 +62,7 @@ public class EditarCorteActivity extends AppCompatActivity {
         calendario = new Calendario();
 
         spinnerTipoAve = (Spinner) findViewById(R.id.spinnerTipoAveCorte);
-        lista = new TipoAve().getListaAves();
+        lista = new TipoAveBD().getListaAves();
         List<String> list = lista;
         tipoAve = lista.get(0);
 
@@ -140,7 +141,7 @@ public class EditarCorteActivity extends AppCompatActivity {
                 this.editDataSaida.setText(corte.getDataSaida());
                 this.editDataEntrada.setText(corte.getDataSaida());
                 this.editObservacao.setText(corte.getComentario());
-                this.spinnerTipoAve.setSelection(MetodosComuns.achaPosicao(new TipoAve().getListaAves(), corte.getTipoAve()));
+                this.spinnerTipoAve.setSelection(MetodosComuns.achaPosicao(new TipoAveBD().getListaAves(), corte.getTipoAve()));
                 this.editMortalidade.setText(this.corte.getMortalidade()+"");
             } else {
                 opcaoExcluir();

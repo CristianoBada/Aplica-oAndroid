@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.cristianobadalotti.aplicacaograjas.Adapters.IncubatorioAdapter;
-import com.cristianobadalotti.aplicacaograjas.Entidades.Incubatorio;
+import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.IncubatorioBD;
 import com.cristianobadalotti.aplicacaograjas.R;
 
 public class IncubatorioActivity extends AppCompatActivity {
@@ -55,7 +55,7 @@ public class IncubatorioActivity extends AppCompatActivity {
     }
 
     private void CreateAdapter() {
-        dadosIncubatorio.setAdapter(new IncubatorioAdapter(new Incubatorio().getLista()));
+        dadosIncubatorio.setAdapter(new IncubatorioAdapter(new IncubatorioBD().getLista()));
     }
 
     public void abreNovoIncubatorio(View view) {

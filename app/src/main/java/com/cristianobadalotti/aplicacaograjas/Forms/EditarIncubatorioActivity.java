@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import com.cristianobadalotti.aplicacaograjas.Entidades.Incubatorio;
 import com.cristianobadalotti.aplicacaograjas.Entidades.TipoAve;
+import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.IncubatorioBD;
+import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.TipoAveBD;
 import com.cristianobadalotti.aplicacaograjas.R;
 import com.cristianobadalotti.aplicacaograjas.Utilitarios.Calendario;
 import com.cristianobadalotti.aplicacaograjas.Utilitarios.MetodosComuns;
@@ -59,7 +61,7 @@ public class EditarIncubatorioActivity extends AppCompatActivity {
         calendario = new Calendario();
 
         spinnerTipoAve = (Spinner) findViewById(R.id.spinnerTipoAveIncubatorio);
-        lista = new TipoAve().getListaAves();
+        lista = new TipoAveBD().getListaAves();
         List<String> list = lista;
         tipoAve = lista.get(0);
 
@@ -108,10 +110,11 @@ public class EditarIncubatorioActivity extends AppCompatActivity {
             this.incubatorio.setTemperatura(Integer.parseInt(this.editTemperatura.getText().toString()));
             this.incubatorio.setMortalidade(Integer.parseInt(this.editMortalidade.getText().toString()));
             this.incubatorio.setDataInicio(this.editData.getText().toString());
-            this.incubatorio.salvar();
+            IncubatorioBD incubatorioBD = new IncubatorioBD();
+            incubatorioBD.salvar(this.incubatorio);
 
-            Toast.makeText(this, this.incubatorio.get_menssagem(), Toast.LENGTH_LONG).show();
-            if (incubatorio.is_status()) {
+            Toast.makeText(this, incubatorioBD.get_menssagem(), Toast.LENGTH_LONG).show();
+            if (incubatorioBD.is_status()) {
                 finish();
             }
         }
@@ -130,7 +133,7 @@ public class EditarIncubatorioActivity extends AppCompatActivity {
                 this.editTemperatura.setText(incubatorio.getTemperatura()+"");
                 this.editTempo.setText(incubatorio.getTempoChocar()+"");
                 this.editUmidade.setText(incubatorio.getUmidade()+"");
-                this.spinnerTipoAve.setSelection(MetodosComuns.achaPosicao(new TipoAve().getListaAves(), incubatorio.getTipoAve()));
+                this.spinnerTipoAve.setSelection(MetodosComuns.achaPosicao(new TipoAveBD().getListaAves(), incubatorio.getTipoAve()));
             } else {
                 opcaoExcluirIncubatorio();
             }
@@ -192,7 +195,7 @@ public class EditarIncubatorioActivity extends AppCompatActivity {
     }
 
     public void excluirIncubatorio(View view) {
-        this.incubatorio.apagar();
+        new IncubatorioBD().apagar(this.incubatorio.getCodigoIncubatorio());
         finish();
     }
 }

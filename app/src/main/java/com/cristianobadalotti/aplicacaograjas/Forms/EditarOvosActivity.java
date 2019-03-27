@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import com.cristianobadalotti.aplicacaograjas.Entidades.Ovos;
 import com.cristianobadalotti.aplicacaograjas.Entidades.TipoAve;
+import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.OvosBD;
+import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.TipoAveBD;
 import com.cristianobadalotti.aplicacaograjas.R;
 import com.cristianobadalotti.aplicacaograjas.Utilitarios.Calendario;
 import com.cristianobadalotti.aplicacaograjas.Utilitarios.MetodosComuns;
@@ -55,7 +57,7 @@ public class EditarOvosActivity extends AppCompatActivity {
         calendario = new Calendario();
 
         spinnerTipoAve = (Spinner) findViewById(R.id.spinnerTipoAveOvos);
-        lista = new TipoAve().getListaAves();
+        lista = new TipoAveBD().getListaAves();
         List<String> list = lista;
         tipoAve = lista.get(0);
 
@@ -100,10 +102,11 @@ public class EditarOvosActivity extends AppCompatActivity {
             this.ovos.setQualidade(this.editQualidade.getText().toString());
             this.ovos.setData(this.editData.getText().toString());
             this.ovos.setLote(this.editLote.getText().toString());
-            this.ovos.salvar();
+            OvosBD ovosBD = new OvosBD();
+            ovosBD.salvar(this.ovos);
 
-            Toast.makeText(this, this.ovos.get_menssagem(), Toast.LENGTH_LONG).show();
-            if (ovos.is_status()) {
+            Toast.makeText(this, ovosBD.get_menssagem(), Toast.LENGTH_LONG).show();
+            if (ovosBD.is_status()) {
                 finish();
             }
         }
@@ -120,7 +123,7 @@ public class EditarOvosActivity extends AppCompatActivity {
                 this.editQuantidade.setText(ovos.getQuantidade()+"");
                 this.editData.setText(ovos.getData());
                 this.editLote.setText(ovos.getLote());
-                this.spinnerTipoAve.setSelection(MetodosComuns.achaPosicao(new TipoAve().getListaAves(), ovos.getTipoAve()));
+                this.spinnerTipoAve.setSelection(MetodosComuns.achaPosicao(new TipoAveBD().getListaAves(), ovos.getTipoAve()));
             } else {
                 opcaoExcluirOvos();
             }
@@ -182,7 +185,7 @@ public class EditarOvosActivity extends AppCompatActivity {
     }
 
     public void excluirOvos(View view) {
-        this.ovos.apagar();
+        new OvosBD().apagar(this.ovos.getCodigo());
         finish();
     }
 
