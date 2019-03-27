@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.cristianobadalotti.aplicacaograjas.Entidades.Corte;
 import com.cristianobadalotti.aplicacaograjas.R;
-import com.cristianobadalotti.aplicacaograjas.ViewHolder.ViewHolderCorte;
+import com.cristianobadalotti.aplicacaograjas.ViewHolders.ViewHolderCorte;
 
 import java.util.ArrayList;
 

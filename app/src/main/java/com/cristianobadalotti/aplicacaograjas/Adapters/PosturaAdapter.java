@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.cristianobadalotti.aplicacaograjas.Entidades.Postura;
 import com.cristianobadalotti.aplicacaograjas.R;
-import com.cristianobadalotti.aplicacaograjas.ViewHolder.ViewHolderPostura;
+import com.cristianobadalotti.aplicacaograjas.ViewHolders.ViewHolderPostura;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.cristianobadalotti.aplicacaograjas.ViewHolder;
+package com.cristianobadalotti.aplicacaograjas.ViewHolders;
 
 import android.content.Context;
 import android.content.Intent;
