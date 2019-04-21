@@ -20,13 +20,13 @@ public class IncubatorioBD  extends _Default {
                 while (resultSet.next()) {
                     Incubatorio incubatorio = new Incubatorio();
 
-                    incubatorio.setCodigoIncubatorio(resultSet.getInt("codigo_incubatorio"));
-                    incubatorio.setDataInicio(resultSet.getString("data_inicio"));
-                    incubatorio.setLoteOvos(resultSet.getString("lote_ovos"));
+                    incubatorio.setCodigoIncubatorio(resultSet.getInt("codigo"));
+                    incubatorio.setDataInicio(resultSet.getString("inicio"));
+                    incubatorio.setLoteOvos(resultSet.getString("loteovos"));
                     incubatorio.setMortalidade(resultSet.getInt("mortalidade"));
                     incubatorio.setTemperatura(resultSet.getInt("temperatura"));
-                    incubatorio.setTempoChocar(resultSet.getInt("tempo_chocar"));
-                    incubatorio.setTipoAve(resultSet.getString("tipo_ave"));
+                    incubatorio.setTempoChocar(resultSet.getInt("tempo"));
+                    incubatorio.setTipoAve(resultSet.getString("tipoave"));
                     incubatorio.setUmidade(resultSet.getInt("umidade"));
 
                     lista.add(incubatorio);
@@ -43,7 +43,7 @@ public class IncubatorioBD  extends _Default {
     }
 
     public void apagar(int codigo) {
-        String comando = String.format("DELETE FROM incubatorio WHERE codigo_incubatorio=%d;", codigo);
+        String comando = String.format("DELETE FROM incubatorio WHERE codigo=%d;", codigo);
 
         BD bd = new BD();
         bd.execute(comando);
@@ -54,14 +54,14 @@ public class IncubatorioBD  extends _Default {
     public void salvar(Incubatorio incubatorio) {
         String comando = "";
         if (incubatorio.getCodigoIncubatorio() == -1) {
-            comando = String.format("INSERT INTO incubatorio (data_inicio, lote_ovos, mortalidade, temperatura, tempo_chocar, tipo_ave, umidade) " +
+            comando = String.format("INSERT INTO incubatorio (inicio, loteovos, mortalidade, temperatura, tempo, tipoave, umidade) " +
                             "VALUES ('%s', '%s', %d, %d, %d, '%s', %d);",
                     incubatorio.getDataInicio(), incubatorio.getLoteOvos(), incubatorio.getMortalidade(), incubatorio.getTemperatura(), incubatorio.getTempoChocar(),
                     incubatorio.getTipoAve(), incubatorio.getUmidade());
         } else {
             comando = String.format("UPDATE incubatorio " +
-                            "SET  data_inicio='%s', lote_ovos='%s', mortalidade=%d, temperatura=%d, tempo_chocar=%d, tipo_ave='%s', umidade=%d" +
-                            " WHERE codigo_incubatorio=%d;",
+                            "SET  inicio='%s', loteovos='%s', mortalidade=%d, temperatura=%d, tempo=%d, tipoave='%s', umidade=%d" +
+                            " WHERE codigo=%d;",
                     incubatorio.getDataInicio(), incubatorio.getLoteOvos(), incubatorio.getMortalidade(), incubatorio.getTemperatura(), incubatorio.getTempoChocar(),
                     incubatorio.getTipoAve(), incubatorio.getUmidade(), incubatorio.getCodigoIncubatorio());
         }

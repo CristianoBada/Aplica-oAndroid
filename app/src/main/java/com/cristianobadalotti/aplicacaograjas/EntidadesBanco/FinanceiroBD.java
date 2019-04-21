@@ -20,8 +20,8 @@ public class FinanceiroBD extends _Default {
                     Financeiro financeiro = new Financeiro();
 
                     financeiro.setEntrasaida(resultSet.getString("entrasaida"));
-                    financeiro.setCodigoFinanceiro(resultSet.getInt("codigo_financeiro"));
-                    financeiro.setDetalhe(resultSet.getString("detalhe"));
+                    financeiro.setCodigoFinanceiro(resultSet.getInt("codigo"));
+                    financeiro.setDetalhe(resultSet.getString("observacao"));
                     financeiro.setNome(resultSet.getString("nome"));
                     financeiro.setValor(resultSet.getDouble("valor"));
 
@@ -39,7 +39,7 @@ public class FinanceiroBD extends _Default {
     }
 
     public void apagar(int codigo) {
-        String comando = String.format("DELETE FROM financeiro WHERE codigo_financeiro=%d;", codigo);
+        String comando = String.format("DELETE FROM financeiro WHERE codigo=%d;", codigo);
 
         BD bd = new BD();
         bd.execute(comando);
@@ -50,13 +50,13 @@ public class FinanceiroBD extends _Default {
     public void salvar(Financeiro financeiro) {
         String comando = "";
         if (financeiro.getCodigoFinanceiro() == -1) {
-            comando = String.format("INSERT INTO financeiro (entrasaida, detalhe, nome, valor) " +
+            comando = String.format("INSERT INTO financeiro (entrasaida, observacao, nome, valor) " +
                             "VALUES ('%s', '%s', '%s', %f);",
                     financeiro.getEntrasaida(), financeiro.getDetalhe(), financeiro.getNome(), financeiro.getValor());
         } else {
             comando = String.format("UPDATE financeiro " +
-                            "SET  entrasaida='%s', detalhe='%s', nome='%s', valor=%f" +
-                            " WHERE codigo_financeiro=%d;",
+                            "SET  entrasaida='%s', observacao='%s', nome='%s', valor=%f" +
+                            " WHERE codigo=%d;",
                     financeiro.getEntrasaida(), financeiro.getDetalhe(), financeiro.getNome(), financeiro.getValor(),
                     financeiro.getCodigoFinanceiro());
         }

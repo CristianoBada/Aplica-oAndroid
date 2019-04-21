@@ -19,14 +19,14 @@ public class CorteBD  extends _Default {
                 while (resultSet.next()) {
                     Corte corte = new Corte();
 
-                    corte.setCodigoCorte(resultSet.getInt("codigo_corte"));
-                    corte.setComentario(resultSet.getString("comentario"));
-                    corte.setDataEntrada(resultSet.getString("data_entrada"));
-                    corte.setDataSaida(resultSet.getString("data_saida"));
+                    corte.setCodigoCorte(resultSet.getInt("codigo"));
+                    corte.setComentario(resultSet.getString("observacao"));
+                    corte.setDataEntrada(resultSet.getString("entrada"));
+                    corte.setDataSaida(resultSet.getString("saida"));
                     corte.setMaximo(resultSet.getInt("maximo"));
                     corte.setMortalidade(resultSet.getInt("mortalidade"));
-                    corte.setQuantidadeAves(resultSet.getInt("quantidade_aves"));
-                    corte.setTipoAve(resultSet.getString("tipo_ave"));
+                    corte.setQuantidadeAves(resultSet.getInt("quantidade"));
+                    corte.setTipoAve(resultSet.getString("tipoave"));
 
                     lista.add(corte);
                     corte = null;
@@ -42,7 +42,7 @@ public class CorteBD  extends _Default {
     }
 
     public void apagar(int codigo) {
-        String comando = String.format("DELETE FROM corte WHERE codigo_corte=%d;", codigo);
+        String comando = String.format("DELETE FROM corte WHERE codigo=%d;", codigo);
 
         BD bd = new BD();
         bd.execute(comando);
@@ -53,14 +53,14 @@ public class CorteBD  extends _Default {
     public void salvar(Corte corte) {
         String comando = "";
         if (corte.getCodigoCorte() == -1) {
-            comando = String.format("INSERT INTO corte (comentario, data_entrada, data_saida, maximo, mortalidade, quantidade_aves, tipo_ave) " +
+            comando = String.format("INSERT INTO corte (observacao, entrada, saida, maximo, mortalidade, quantidade, tipoave) " +
                             "VALUES ('%s', '%s', '%s', %d, %d, %d, '%s');",
                     corte.getComentario(), corte.getDataEntrada(), corte.getDataSaida(), corte.getMaximo(), corte.getMortalidade(),
                     corte.getQuantidadeAves(), corte.getTipoAve());
         } else {
             comando = String.format("UPDATE corte " +
-                            "SET  comentario='%s', data_entrada='%s', data_saida='%s', maximo=%d, mortalidade=%d, quantidade_aves=%d, tipo_ave='%s'" +
-                            " WHERE codigo_corte=%d;",
+                            "SET  observacao='%s', entrada='%s', saida='%s', maximo=%d, mortalidade=%d, quantidade=%d, tipoave='%s'" +
+                            " WHERE codigo=%d;",
                     corte.getComentario(), corte.getDataEntrada(), corte.getDataSaida(), corte.getMaximo(), corte.getMortalidade(),
                     corte.getQuantidadeAves(), corte.getTipoAve(), corte.getCodigoCorte());
         }

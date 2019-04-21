@@ -23,13 +23,13 @@ public class PosturaBD extends _Default {
                 while (resultSet.next()) {
                     Postura postura = new Postura();
 
-                    postura.setCodigoPostura(resultSet.getInt("codigo_postura"));
-                    postura.setComentario(resultSet.getString("comentario"));
-                    postura.setDataentrada(resultSet.getString("dataentrada"));
-                    postura.setDatasaida(resultSet.getString("datasaida"));
-                    postura.setMaximoAves(resultSet.getInt("maximo_aves"));
+                    postura.setCodigoPostura(resultSet.getInt("codigo"));
+                    postura.setComentario(resultSet.getString("observacao"));
+                    postura.setDataentrada(resultSet.getString("entrada"));
+                    postura.setDatasaida(resultSet.getString("saida"));
+                    postura.setMaximoAves(resultSet.getInt("maximo"));
                     postura.setQuantidade(resultSet.getInt("quantidade"));
-                    postura.setTipoAve(resultSet.getString("tipo_ave"));
+                    postura.setTipoAve(resultSet.getString("tipoave"));
 
                     lista.add(postura);
                     postura = null;
@@ -45,7 +45,7 @@ public class PosturaBD extends _Default {
     }
 
     public void apagar(int codigo) {
-        String comando = String.format("DELETE FROM postura WHERE codigo_postura=%d;", codigo);
+        String comando = String.format("DELETE FROM postura WHERE codigo=%d;", codigo);
 
         BD bd = new BD();
         bd.execute(comando);
@@ -56,13 +56,13 @@ public class PosturaBD extends _Default {
     public void salvar(Postura postura) {
         String comando = "";
         if (postura.getCodigoPostura() == -1) {
-            comando = String.format("INSERT INTO postura (comentario, dataentrada, datasaida, maximo_aves, quantidade, tipo_ave) VALUES ('%s', '%s', '%s', %d, %d, '%s');",
+            comando = String.format("INSERT INTO postura (observacao, entrada, saida, maximo, quantidade, tipoave) VALUES ('%s', '%s', '%s', %d, %d, '%s');",
                     postura.getComentario(), postura.getDataentrada(), postura.getDatasaida(), postura.getMaximoAves(),
                     postura.getQuantidade(), postura.getTipoAve());
         } else {
             comando = String.format("UPDATE postura " +
-                            "SET  comentario='%s', dataentrada='%s', datasaida='%s', maximo_aves=%d, quantidade='%d', tipo_ave='%s'" +
-                            " WHERE codigo_postura=%d;",
+                            "SET  observacao='%s', entrada='%s', saida='%s', maximo=%d, quantidade='%d', tipoave='%s'" +
+                            " WHERE codigo=%d;",
                     postura.getComentario(), postura.getDataentrada(), postura.getDatasaida(), postura.getMaximoAves(),
                     postura.getQuantidade(), postura.getTipoAve(), postura.getCodigoPostura());
         }

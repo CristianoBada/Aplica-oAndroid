@@ -19,10 +19,10 @@ public class VacinaBD extends _Default {
                 while (resultSet.next()) {
                     Vacina vacina = new Vacina();
 
-                    vacina.setCodigoVacina(resultSet.getInt("codigo_vacina"));
-                    vacina.setDataTratamento(resultSet.getString("data_tratamento"));
-                    vacina.setDetalhe(resultSet.getString("detalhe"));
-                    vacina.setTipoTratamento(resultSet.getString("tipo_tratamento"));
+                    vacina.setCodigoVacina(resultSet.getInt("codigo"));
+                    vacina.setDataTratamento(resultSet.getString("data"));
+                    vacina.setDetalhe(resultSet.getString("observacao"));
+                    vacina.setTipoTratamento(resultSet.getString("tipo"));
 
                     lista.add(vacina);
                     vacina = null;
@@ -38,7 +38,7 @@ public class VacinaBD extends _Default {
     }
 
     public void apagar(int codigo) {
-        String comando = String.format("DELETE FROM vacina WHERE codigo_vacina=%d;", codigo);
+        String comando = String.format("DELETE FROM vacina WHERE codigo=%d;", codigo);
 
         BD bd = new BD();
         bd.execute(comando);
@@ -49,13 +49,13 @@ public class VacinaBD extends _Default {
     public void salvar(Vacina vacina) {
         String comando = "";
         if (vacina.getCodigoVacina() == -1) {
-            comando = String.format("INSERT INTO vacina (data_tratamento, detalhe, tipo_tratamento) " +
+            comando = String.format("INSERT INTO vacina (data, observacao, tipo) " +
                             "VALUES ('%s', '%s', '%s');",
                     vacina.getDataTratamento(), vacina.getDetalhe(), vacina.getTipoTratamento());
         } else {
             comando = String.format("UPDATE vacina " +
-                            "SET  data_tratamento='%s', detalhe='%s', tipo_tratamento='%s'" +
-                            " WHERE codigo_vacina=%d;",
+                            "SET  data='%s', observacao='%s', tipo='%s'" +
+                            " WHERE codigo=%d;",
                     vacina.getDataTratamento(), vacina.getDetalhe(), vacina.getTipoTratamento(),
                     vacina.getCodigoVacina());
         }

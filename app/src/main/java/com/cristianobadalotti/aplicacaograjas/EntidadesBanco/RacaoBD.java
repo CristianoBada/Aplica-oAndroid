@@ -19,10 +19,10 @@ public class RacaoBD extends _Default {
                 while (resultSet.next()) {
                     Racao racao = new Racao();
 
-                    racao.setCodigoRacao(resultSet.getInt("codigo_racao"));
-                    racao.setDataEntrada(resultSet.getString("data_entrada"));
+                    racao.setCodigoRacao(resultSet.getInt("codigo"));
+                    racao.setDataEntrada(resultSet.getString("entrada"));
                     racao.setQuantidade(resultSet.getInt("quantidade"));
-                    racao.setTipoRacao(resultSet.getString("tipo_racao"));
+                    racao.setTipoRacao(resultSet.getString("tiporacao"));
 
                     lista.add(racao);
                     racao = null;
@@ -38,7 +38,7 @@ public class RacaoBD extends _Default {
     }
 
     public void apagar(int codigo) {
-        String comando = String.format("DELETE FROM racao WHERE codigo_racao=%d;", codigo);
+        String comando = String.format("DELETE FROM racao WHERE codigo=%d;", codigo);
 
         BD bd = new BD();
         bd.execute(comando);
@@ -49,13 +49,13 @@ public class RacaoBD extends _Default {
     public void salvar(Racao racao) {
         String comando = "";
         if (racao.getCodigoRacao() == -1) { ////codigo_racao, data_entrada, quantidade, codigo_corte, codigo_postura, tipo_racao)
-            comando = String.format("INSERT INTO racao (data_entrada, quantidade, tipo_racao) " +
+            comando = String.format("INSERT INTO racao (entrada, quantidade, tiporacao) " +
                             "VALUES ('%s', %d, '%s');",
                     racao.getDataEntrada(), racao.getQuantidade(), racao.getTipoRacao());
         } else {
             comando = String.format("UPDATE racao " +
-                            "SET  data_entrada='%s', quantidade=%d, tipo_racao='%s'" +
-                            " WHERE codigo_racao=%d;",
+                            "SET  entrada='%s', quantidade=%d, tiporacao='%s'" +
+                            " WHERE codigo=%d;",
                     racao.getDataEntrada(), racao.getQuantidade(), racao.getTipoRacao(), racao.getCodigoRacao());
         }
 

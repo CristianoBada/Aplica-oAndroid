@@ -26,7 +26,7 @@ public class OvosBD extends _Default {
                     ovos.setLote(resultSet.getString("lote"));
                     ovos.setQualidade(resultSet.getString("qualidade"));
                     ovos.setQuantidade(resultSet.getInt("quantidade"));
-                    ovos.setTipoAve(resultSet.getString("tipo_ave"));
+                    ovos.setTipoAve(resultSet.getString("tipoave"));
 
                     lista.add(ovos);
                     ovos = null;
@@ -53,12 +53,12 @@ public class OvosBD extends _Default {
     public void salvar(Ovos ovos) {
         String comando = "";
         if (ovos.getCodigo() == -1) {
-            comando = String.format("INSERT INTO ovos (data, lote, qualidade, quantidade, tipo_ave, incubacao) VALUES ('%s', '%s', '%s', %d, '%s', '%s');",
+            comando = String.format("INSERT INTO ovos (data, lote, qualidade, quantidade, tipoave, incubacao) VALUES ('%s', '%s', '%s', %d, '%s', '%s');",
                     ovos.getData(), ovos.getLote(), ovos.getQualidade(), ovos.getQuantidade(), ovos.getTipoAve(),
                     ovos.getIncubacao());
         } else {
             comando = String.format("UPDATE ovos " +
-                            "SET  data='%s', lote='%s', qualidade='%s', quantidade=%d, tipo_ave='%s', incubacao='%s'" +
+                            "SET  data='%s', lote='%s', qualidade='%s', quantidade=%d, tipoave='%s', incubacao='%s'" +
                             " WHERE codigo=%d;",
                     ovos.getData(), ovos.getLote(), ovos.getQualidade(), ovos.getQuantidade(), ovos.getTipoAve(),
                     ovos.getIncubacao(), ovos.getCodigo());
