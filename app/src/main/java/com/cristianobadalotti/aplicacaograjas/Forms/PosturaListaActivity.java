@@ -25,6 +25,7 @@ public class PosturaListaActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("Lista de Granjas Postura");
 
         dadosPostura = (RecyclerView)findViewById(R.id.dadosPostura);
 

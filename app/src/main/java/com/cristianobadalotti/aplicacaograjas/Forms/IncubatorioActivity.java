@@ -25,6 +25,7 @@ public class IncubatorioActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("Lista de Incubatórios");
 
         dadosIncubatorio = (RecyclerView)findViewById(R.id.dadosIncubatorio);
 

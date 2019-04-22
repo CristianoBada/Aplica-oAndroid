@@ -1,5 +1,6 @@
 package com.cristianobadalotti.aplicacaograjas.Forms;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,6 +18,7 @@ import com.cristianobadalotti.aplicacaograjas.R;
 public class CorteActivity extends AppCompatActivity {
 
     private RecyclerView dadosCorte;
+    public ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,7 @@ public class CorteActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("Lista de Granjas de Corte");
 
         dadosCorte = (RecyclerView)findViewById(R.id.dadosCorte);
 
@@ -45,7 +48,6 @@ public class CorteActivity extends AppCompatActivity {
                 finish();
                 break;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -60,8 +62,17 @@ public class CorteActivity extends AppCompatActivity {
         dadosCorte.setAdapter(corteAdapter);
     }
 
+    private void criaProgressDialog() {
+        progressDialog = new ProgressDialog(CorteActivity.this);
+        progressDialog.setMessage("Carregando... Espere um momento...");
+        progressDialog.setIndeterminate(true);
+        progressDialog.show();
+    }
+
     public void abreNovoCorte(View view) {
-        Intent intent = new Intent(CorteActivity.this, EditarCorteActivity.class);
+
+        Intent intent = new Intent(CorteActivity.this, SplashActivity.class);
+        intent.putExtra("CODE", 1);
         startActivityForResult(intent, 0);
     }
 }

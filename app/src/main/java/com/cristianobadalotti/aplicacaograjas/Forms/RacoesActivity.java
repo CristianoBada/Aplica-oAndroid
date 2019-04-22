@@ -25,6 +25,7 @@ public class RacoesActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("Lista de Lotes de Rações");
 
         dadosRacao = (RecyclerView)findViewById(R.id.dadosRacao);
 

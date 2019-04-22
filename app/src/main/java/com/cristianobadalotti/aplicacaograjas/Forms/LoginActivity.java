@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.cristianobadalotti.aplicacaograjas.Entidades.Usuario;
+import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.UsuarioBD;
 import com.cristianobadalotti.aplicacaograjas.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -24,20 +25,17 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setTitle("ASF - AVICULTURA");
 
         buttonEntrar = (Button)findViewById(R.id.buttonEntrar);
         editSenha = (EditText)findViewById(R.id.editTextSenha);
         editUsuario = (EditText)findViewById(R.id.editTextUsuario);
-
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(intent);
     }
 
     public void entraNoSistema(View view) {
-
-        Usuario usuario = new Usuario(editUsuario.getText().toString(), editSenha.getText().toString());
-
-        if (usuario.validaUsuario()) {
+        UsuarioBD bd = new UsuarioBD();
+        boolean valido = bd.existeUsuario(editUsuario.getText().toString(), editSenha.getText().toString());
+        if (valido) {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
         } else {

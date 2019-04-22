@@ -25,6 +25,7 @@ public class FinanceiroActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("Lista Financeiro");
 
         dadosFinanceiro= (RecyclerView)findViewById(R.id.dadosFinanceiro);
 

@@ -15,25 +15,8 @@ public class Usuario extends _Default implements Serializable {
         this.senha = senha;
     }
 
-    public boolean validaUsuario() {
-        BD bd = new BD();
-        boolean valido = false;
-
-        try {
-            String comando = String.format("SELECT * FROM usuario WHERE login='%s' AND senha='%s';",
-                    this.getNome(), this.getSenha());
-            ResultSet resultSet = bd.select(comando);
-            if (resultSet != null) {
-                valido = true;
-            }
-        } catch (Exception e) {
-            this._menssagem = e.getMessage();
-            this._status = false;
-        }
-
-        this._menssagem = bd._menssagem;
-        this._status = bd._status;
-        return valido;
+    public Usuario() {
+        super();
     }
 
     public String getNome() {

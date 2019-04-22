@@ -48,6 +48,7 @@ public class EditarRacoesActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("Eição de Lotes de Rações");
 
         racao = new Racao();
 

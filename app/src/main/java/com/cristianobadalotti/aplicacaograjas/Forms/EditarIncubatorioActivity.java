@@ -55,6 +55,7 @@ public class EditarIncubatorioActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("Edição de Incubatório");
 
         incubatorio = new Incubatorio();
 

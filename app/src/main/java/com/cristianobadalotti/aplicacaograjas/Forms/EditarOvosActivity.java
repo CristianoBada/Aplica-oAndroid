@@ -51,6 +51,7 @@ public class EditarOvosActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("Edição de Lote de Ovos");
 
         ovos = new Ovos();
 

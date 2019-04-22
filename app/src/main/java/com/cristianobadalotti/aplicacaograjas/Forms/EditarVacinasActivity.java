@@ -38,6 +38,7 @@ public class EditarVacinasActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("Edição de Tratamentos");
 
         vacina = new Vacina();
 

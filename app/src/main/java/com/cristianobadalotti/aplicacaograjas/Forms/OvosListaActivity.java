@@ -25,6 +25,7 @@ public class OvosListaActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("Lista de Lotes de Ovos");
 
         dadosOvos = (RecyclerView)findViewById(R.id.dadosOvos);
 

@@ -46,6 +46,7 @@ public class EditarFinanceiroActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("Edição Financeiro");
 
         financeiro = new Financeiro();
 

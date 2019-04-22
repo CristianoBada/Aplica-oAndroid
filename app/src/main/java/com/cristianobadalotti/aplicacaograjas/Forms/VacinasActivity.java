@@ -25,6 +25,7 @@ public class VacinasActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("Lista de Tratamentos");
 
         dadosVacina = (RecyclerView)findViewById(R.id.dadosVacina);
 

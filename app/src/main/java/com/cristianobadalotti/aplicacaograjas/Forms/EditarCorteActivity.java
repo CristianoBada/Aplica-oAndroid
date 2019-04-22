@@ -56,6 +56,7 @@ public class EditarCorteActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("Edição de Granja de Corte");
 
         corte = new Corte();
 

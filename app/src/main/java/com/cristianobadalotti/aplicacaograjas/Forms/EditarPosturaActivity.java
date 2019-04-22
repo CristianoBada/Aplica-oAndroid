@@ -56,6 +56,7 @@ public class EditarPosturaActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle("Edição de Granja Postura");
 
         postura = new Postura();
 
