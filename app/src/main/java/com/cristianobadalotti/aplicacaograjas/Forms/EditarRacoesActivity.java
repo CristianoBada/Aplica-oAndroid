@@ -1,7 +1,9 @@
 package com.cristianobadalotti.aplicacaograjas.Forms;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -24,6 +26,7 @@ import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.RacaoBD;
 import com.cristianobadalotti.aplicacaograjas.R;
 import com.cristianobadalotti.aplicacaograjas.Utilitarios.Calendario;
 import com.cristianobadalotti.aplicacaograjas.Utilitarios.MetodosComuns;
+import com.cristianobadalotti.aplicacaograjas.Utilitarios.Validacoes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +43,7 @@ public class EditarRacoesActivity extends AppCompatActivity {
     private EditText editTipo;
 
     private Racao racao;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +51,6 @@ public class EditarRacoesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_editar_racoes);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("Eição de Lotes de Rações");
 
         racao = new Racao();
@@ -71,6 +74,7 @@ public class EditarRacoesActivity extends AppCompatActivity {
 
     public void salvarRacao(View view) {
         if (!validaCampos()) {
+            criaProgress();
             this.racao.setTipoRacao(this.editTipo.getText().toString());
             this.racao.setQuantidade(Integer.parseInt(this.editQuantidade.getText().toString()));
             this.racao.setDataEntrada(this.editData.getText().toString());
@@ -109,21 +113,20 @@ public class EditarRacoesActivity extends AppCompatActivity {
     }
 
     private boolean validaCampos() {
-
-      /*  String quant = editQuantidade.getText().toString();
-        String max = editMaxAves.getText().toString();
-        String dataEntrada = editDataEntrada.getText().toString();
+        String tipo = editTipo.getText().toString();
+        String quant = editQuantidade.getText().toString();
+        String data = editData.getText().toString();
 
         boolean res = false;
 
-        if (res = Validacoes.isCampoVazio(quant)) {
-            editQuantidade.requestFocus();
+        if (res = Validacoes.isCampoVazio(tipo)) {
+            editTipo.requestFocus();
         } else {
-            if (res = Validacoes.isCampoVazio(max)) {
-                editMaxAves.requestFocus();
+            if (res = Validacoes.isCampoVazio(quant)) {
+                editQuantidade.requestFocus();
             } else {
-                if (res = Validacoes.isCampoVazio(dataEntrada)) {
-                    editDataEntrada.requestFocus();
+                if (res = Validacoes.isCampoVazio(data)) {
+                    editData.requestFocus();
                 }
             }
         }
@@ -136,8 +139,7 @@ public class EditarRacoesActivity extends AppCompatActivity {
             ab.show();
         }
 
-        return res;*/
-        return false;
+        return res;
     }
 
     private DatePickerDialog.OnDateSetListener mDateSetListener =
@@ -156,11 +158,27 @@ public class EditarRacoesActivity extends AppCompatActivity {
     }
 
     public void excluirRacao(View view) {
+        criaProgress();
         new RacaoBD().apagar(this.racao.getCodigoRacao());
         finish();
     }
 
     @Override
     public void onBackPressed() {
+        criaProgress();
+        finish();
+    }
+
+    public void voltarMenu(View view) {
+        criaProgress();
+        finish();
+    }
+
+    private void criaProgress() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("AGUARDE");
+        progressDialog.setMessage("Carregando...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.show();
     }
 }

@@ -1,5 +1,6 @@
 package com.cristianobadalotti.aplicacaograjas.Forms;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,6 +18,7 @@ import com.cristianobadalotti.aplicacaograjas.R;
 public class RacoesActivity extends AppCompatActivity {
 
     private RecyclerView dadosRacao;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,17 +57,34 @@ public class RacoesActivity extends AppCompatActivity {
     }
 
     private void CreateAdapter() {
-        RacaoAdapter racaoAdapter = new RacaoAdapter(new RacaoBD().getLista());
-
-        dadosRacao.setAdapter(racaoAdapter);
+        if (progressDialog != null) {
+            progressDialog.cancel();
+        }
+        dadosRacao.setAdapter(new RacaoAdapter(new RacaoBD().getLista()));
     }
 
     public void abreNovoRacao(View view) {
+        criaProgress();
         Intent intent = new Intent(RacoesActivity.this, EditarRacoesActivity.class);
         startActivityForResult(intent, 0);
     }
 
     @Override
     public void onBackPressed() {
+        criaProgress();
+        finish();
+    }
+
+    public void voltarMenu(View view) {
+        criaProgress();
+        finish();
+    }
+
+    private void criaProgress() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("AGUARDE");
+        progressDialog.setMessage("Carregando...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.show();
     }
 }

@@ -1,7 +1,9 @@
 package com.cristianobadalotti.aplicacaograjas.Forms;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +23,7 @@ import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.ProdutoBD;
 import com.cristianobadalotti.aplicacaograjas.R;
 import com.cristianobadalotti.aplicacaograjas.Utilitarios.Calendario;
 import com.cristianobadalotti.aplicacaograjas.Utilitarios.MetodosComuns;
+import com.cristianobadalotti.aplicacaograjas.Utilitarios.Validacoes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +41,7 @@ public class EditarFinanceiroActivity extends AppCompatActivity {
     private ArrayList<String> listaTrasacao;
     private ArrayList<String> listaProdutos;
     private String produto;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +49,6 @@ public class EditarFinanceiroActivity extends AppCompatActivity {
         setContentView(R.layout.activity_editar_financeiro);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("Edição Financeiro");
 
         financeiro = new Financeiro();
@@ -112,6 +115,7 @@ public class EditarFinanceiroActivity extends AppCompatActivity {
 
     public void salvarFinanceiro(View view) {
         if (!validaCampos()) {
+            criaProgress();
             this.financeiro.setValor(Double.parseDouble(this.editValor.getText().toString()));
             this.financeiro.setNome(this.produto);
             this.financeiro.setDetalhe(this.editDetalhe.getText().toString());
@@ -153,22 +157,12 @@ public class EditarFinanceiroActivity extends AppCompatActivity {
 
     private boolean validaCampos() {
 
-      /*  String quant = editQuantidade.getText().toString();
-        String max = editMaxAves.getText().toString();
-        String dataEntrada = editDataEntrada.getText().toString();
+        String valor = editValor.getText().toString();
 
         boolean res = false;
 
-        if (res = Validacoes.isCampoVazio(quant)) {
-            editQuantidade.requestFocus();
-        } else {
-            if (res = Validacoes.isCampoVazio(max)) {
-                editMaxAves.requestFocus();
-            } else {
-                if (res = Validacoes.isCampoVazio(dataEntrada)) {
-                    editDataEntrada.requestFocus();
-                }
-            }
+        if (res = Validacoes.isCampoVazio(valor)) {
+            editValor.requestFocus();
         }
 
         if (res) {
@@ -179,16 +173,31 @@ public class EditarFinanceiroActivity extends AppCompatActivity {
             ab.show();
         }
 
-        return res;*/
-        return false;
+        return res;
     }
 
     public void excluirIncubatorio(View view) {
+        criaProgress();
         new FinanceiroBD().apagar(this.financeiro.getCodigoFinanceiro());
         finish();
     }
 
     @Override
     public void onBackPressed() {
+        criaProgress();
+        finish();
+    }
+
+    public void voltarMenu(View view) {
+        criaProgress();
+        finish();
+    }
+
+    private void criaProgress() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("AGUARDE");
+        progressDialog.setMessage("Carregando...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.show();
     }
 }

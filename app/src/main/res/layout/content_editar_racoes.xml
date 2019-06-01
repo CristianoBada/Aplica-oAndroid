@@ -95,6 +95,18 @@
         android:layout_marginTop="8dp"
         android:onClick="excluirRacao"
         android:text="@string/str_Excluir"
+        app:layout_constraintStart_toEndOf="@+id/button19"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDataRacao" />
+
+    <Button
+        android:id="@+id/button19"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:onClick="voltarMenu"
+        android:text="@string/voltar"
         app:layout_constraintStart_toEndOf="@+id/buttonSalvarRacao"
         app:layout_constraintTop_toBottomOf="@+id/editTextDataRacao" />
 </android.support.constraint.ConstraintLayout>

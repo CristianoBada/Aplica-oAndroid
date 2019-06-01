@@ -60,10 +60,7 @@ public class PosturaListaActivity extends AppCompatActivity {
         if (progressDialog != null) {
             progressDialog.cancel();
         }
-
-        PosturaAdapter posturaAdapter = new PosturaAdapter(new PosturaBD().getLista());
-
-        dadosPostura.setAdapter(posturaAdapter);
+        dadosPostura.setAdapter(new PosturaAdapter(new PosturaBD().getLista()));
     }
 
     public void abreNovoPostura(View view) {

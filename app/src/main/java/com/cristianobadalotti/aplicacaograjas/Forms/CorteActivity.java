@@ -56,24 +56,34 @@ public class CorteActivity extends AppCompatActivity {
     }
 
     private void CreateAdapter() {
-        CorteAdapter corteAdapter = new CorteAdapter(new CorteBD().getLista());
-
-        dadosCorte.setAdapter(corteAdapter);
-    }
-
-    private void criaProgressDialog() {
-        progressDialog = new ProgressDialog(CorteActivity.this);
-        progressDialog.setMessage("Carregando... Espere um momento...");
-        progressDialog.setIndeterminate(true);
-        progressDialog.show();
+        if (progressDialog != null) {
+            progressDialog.cancel();
+        }
+        dadosCorte.setAdapter(new CorteAdapter(new CorteBD().getLista()));
     }
 
     public void abreNovoCorte(View view) {
+        criaProgress();
         Intent intent = new Intent(CorteActivity.this, EditarCorteActivity.class);
         startActivityForResult(intent, 0);
     }
 
     @Override
     public void onBackPressed() {
+        criaProgress();
+        finish();
+    }
+
+    public void voltarMenu(View view) {
+        criaProgress();
+        finish();
+    }
+
+    private void criaProgress() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("AGUARDE");
+        progressDialog.setMessage("Carregando...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.show();
     }
 }

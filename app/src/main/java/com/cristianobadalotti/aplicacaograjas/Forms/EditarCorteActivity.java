@@ -1,7 +1,9 @@
 package com.cristianobadalotti.aplicacaograjas.Forms;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,12 +18,12 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.cristianobadalotti.aplicacaograjas.Entidades.Corte;
-import com.cristianobadalotti.aplicacaograjas.Entidades.TipoAve;
 import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.CorteBD;
 import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.TipoAveBD;
 import com.cristianobadalotti.aplicacaograjas.R;
 import com.cristianobadalotti.aplicacaograjas.Utilitarios.Calendario;
 import com.cristianobadalotti.aplicacaograjas.Utilitarios.MetodosComuns;
+import com.cristianobadalotti.aplicacaograjas.Utilitarios.Validacoes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +50,7 @@ public class EditarCorteActivity extends AppCompatActivity {
 
     private ArrayList<String> lista;
     private String tipoAve;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,13 +116,16 @@ public class EditarCorteActivity extends AppCompatActivity {
 
     public void salvarCorte(View view) {
         if (!validaCampos()) {
+            criaProgress();
             this.corte.setTipoAve(this.tipoAve); //getSelectedItem().toString()
             this.corte.setQuantidadeAves(Integer.parseInt(this.editQuantidade.getText().toString()));
             this.corte.setMaximo(Integer.parseInt(this.editMaxAves.getText().toString()));
             this.corte.setDataSaida(this.editDataSaida.getText().toString());
             this.corte.setDataEntrada(this.editDataEntrada.getText().toString());
             this.corte.setComentario(this.editObservacao.getText().toString());
-            this.corte.setMortalidade(Integer.parseInt(this.editMortalidade.getText().toString()));
+            if (!this.editMortalidade.getText().toString().isEmpty()) {
+                this.corte.setMortalidade(Integer.parseInt(this.editMortalidade.getText().toString()));
+            }
             CorteBD corteBD = new CorteBD();
             corteBD.salvar(this.corte);
 
@@ -159,7 +165,7 @@ public class EditarCorteActivity extends AppCompatActivity {
 
     private boolean validaCampos() {
 
-        /*  String quant = editQuantidade.getText().toString();
+        String quant = editQuantidade.getText().toString();
         String max = editMaxAves.getText().toString();
         String dataEntrada = editDataEntrada.getText().toString();
 
@@ -185,8 +191,7 @@ public class EditarCorteActivity extends AppCompatActivity {
             ab.show();
         }
 
-        return res;*/
-        return false;
+        return res;
     }
 
     //Código do calendario
@@ -214,11 +219,27 @@ public class EditarCorteActivity extends AppCompatActivity {
     }
 
     public void excluirCorte(View view) {
+        criaProgress();
         new CorteBD().apagar(this.corte.getCodigoCorte());
         finish();
     }
 
     @Override
     public void onBackPressed() {
+        criaProgress();
+        finish();
+    }
+
+    public void voltarMenu(View view) {
+        criaProgress();
+        finish();
+    }
+
+    private void criaProgress() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("AGUARDE");
+        progressDialog.setMessage("Carregando...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.show();
     }
 }

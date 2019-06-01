@@ -6,11 +6,11 @@ public class Corte implements Serializable {
 
     private int codigoCorte = -1;
     private int quantidadeAves;
-    private int mortalidade;
+    private int mortalidade = 0;
     private String comentario;
     private int maximo;
     private String dataEntrada;
-    private String dataSaida;
+    private String dataSaida = "";
     private String tipoAve;
 
     public int getCodigoCorte() {

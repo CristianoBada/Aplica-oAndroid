@@ -177,6 +177,18 @@
         android:layout_marginTop="8dp"
         android:onClick="excluirCorte"
         android:text="@string/str_Excluir"
+        app:layout_constraintStart_toEndOf="@+id/button18"
+        app:layout_constraintTop_toBottomOf="@+id/editTextComentarioCorte" />
+
+    <Button
+        android:id="@+id/button18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:onClick="voltarMenu"
+        android:text="@string/voltar"
         app:layout_constraintStart_toEndOf="@+id/buttonNovoCorte"
         app:layout_constraintTop_toBottomOf="@+id/editTextComentarioCorte" />
 </android.support.constraint.ConstraintLayout>

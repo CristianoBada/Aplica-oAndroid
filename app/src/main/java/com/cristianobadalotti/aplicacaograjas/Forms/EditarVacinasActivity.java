@@ -3,6 +3,7 @@ package com.cristianobadalotti.aplicacaograjas.Forms;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -31,7 +32,7 @@ public class EditarVacinasActivity extends AppCompatActivity {
     private EditText editDetalhe;
 
     private Vacina vacina;
-
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +63,7 @@ public class EditarVacinasActivity extends AppCompatActivity {
 
     public void salvarVacina(View view) {
         if (!validaCampos()) {
+            criaProgress();
             this.vacina.setTipoTratamento(this.editTipo.getText().toString());
             this.vacina.setDetalhe(this.editDetalhe.getText().toString());
             this.vacina.setDataTratamento(this.editData.getText().toString());
@@ -145,10 +147,21 @@ public class EditarVacinasActivity extends AppCompatActivity {
     }
 
     public void voltarVacina(View view) {
+        criaProgress();
         finish();
     }
 
     @Override
     public void onBackPressed() {
+        criaProgress();
+        finish();
+    }
+
+    private void criaProgress() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("AGUARDE");
+        progressDialog.setMessage("Carregando...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.show();
     }
 }

@@ -30,4 +30,5 @@
     <string name="str_Salvar">SALVAR</string>
     <string name="str_Excluir">EXCLUIR</string>
     <string name="title_activity_splash">SplashActivity</string>
+    <string name="voltar">VOLTAR</string>
 </resources>
