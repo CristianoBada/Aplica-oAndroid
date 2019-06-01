@@ -24,7 +24,6 @@ public class RacoesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_racoes);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("Lista de Lotes de Rações");
 
         dadosRacao = (RecyclerView)findViewById(R.id.dadosRacao);
@@ -66,4 +65,7 @@ public class RacoesActivity extends AppCompatActivity {
         startActivityForResult(intent, 0);
     }
 
+    @Override
+    public void onBackPressed() {
+    }
 }

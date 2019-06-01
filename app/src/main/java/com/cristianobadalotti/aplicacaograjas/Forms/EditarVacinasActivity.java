@@ -1,5 +1,6 @@
 package com.cristianobadalotti.aplicacaograjas.Forms;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
@@ -16,6 +17,7 @@ import com.cristianobadalotti.aplicacaograjas.Entidades.Vacina;
 import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.VacinaBD;
 import com.cristianobadalotti.aplicacaograjas.R;
 import com.cristianobadalotti.aplicacaograjas.Utilitarios.Calendario;
+import com.cristianobadalotti.aplicacaograjas.Utilitarios.Validacoes;
 
 public class EditarVacinasActivity extends AppCompatActivity {
 
@@ -37,7 +39,6 @@ public class EditarVacinasActivity extends AppCompatActivity {
         setContentView(R.layout.activity_editar_vacinas);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("Edição de Tratamentos");
 
         vacina = new Vacina();
@@ -47,7 +48,7 @@ public class EditarVacinasActivity extends AppCompatActivity {
         editDetalhe = (EditText) findViewById(R.id.editTextDetalheVacina);
         editTipo = (EditText) findViewById(R.id.editTextTipoVacina);
 
-        editData= (EditText)findViewById(R.id.editTextDataVacina);
+        editData = (EditText) findViewById(R.id.editTextDataVacina);
 
         editData.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,27 +94,22 @@ public class EditarVacinasActivity extends AppCompatActivity {
     }
 
     private void opcaoExcluirVacina() {
-        Button button = (Button)findViewById(R.id.buttonExcluirVacina);
+        Button button = (Button) findViewById(R.id.buttonExcluirVacina);
         button.setVisibility(View.INVISIBLE);
     }
 
     private boolean validaCampos() {
 
-      /*  String quant = editQuantidade.getText().toString();
-        String max = editMaxAves.getText().toString();
-        String dataEntrada = editDataEntrada.getText().toString();
+        String data = editData.getText().toString();
+        String tipo = editTipo.getText().toString();
 
-        boolean res = false;
+        boolean res;
 
-        if (res = Validacoes.isCampoVazio(quant)) {
-            editQuantidade.requestFocus();
+        if (res = Validacoes.isCampoVazio(tipo)) {
+            editTipo.requestFocus();
         } else {
-            if (res = Validacoes.isCampoVazio(max)) {
-                editMaxAves.requestFocus();
-            } else {
-                if (res = Validacoes.isCampoVazio(dataEntrada)) {
-                    editDataEntrada.requestFocus();
-                }
+            if (res = Validacoes.isCampoVazio(data)) {
+                editData.requestFocus();
             }
         }
 
@@ -125,8 +121,7 @@ public class EditarVacinasActivity extends AppCompatActivity {
             ab.show();
         }
 
-        return res;*/
-        return false;
+        return res;
     }
 
     private DatePickerDialog.OnDateSetListener mDateSetListener =
@@ -147,5 +142,13 @@ public class EditarVacinasActivity extends AppCompatActivity {
     public void excluirVacina(View view) {
         new VacinaBD().apagar(this.vacina.getCodigoVacina());
         finish();
+    }
+
+    public void voltarVacina(View view) {
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
     }
 }

@@ -7,10 +7,10 @@ public class Incubatorio implements Serializable {
     private int codigoIncubatorio = -1;
     private String loteOvos;
     private Integer temperatura;
-    private Integer umidade;
+    private Integer umidade = 0;
     private Integer tempoChocar;
     private String dataInicio;
-    private Integer mortalidade;
+    private Integer mortalidade = 0;
     private String tipoAve;
 
     public int getCodigoIncubatorio() {

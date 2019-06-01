@@ -2,6 +2,7 @@ package com.cristianobadalotti.aplicacaograjas.Forms;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -14,14 +15,15 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.support.v7.app.AlertDialog;
 
 import com.cristianobadalotti.aplicacaograjas.Entidades.Ovos;
-import com.cristianobadalotti.aplicacaograjas.Entidades.TipoAve;
 import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.OvosBD;
 import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.TipoAveBD;
 import com.cristianobadalotti.aplicacaograjas.R;
 import com.cristianobadalotti.aplicacaograjas.Utilitarios.Calendario;
 import com.cristianobadalotti.aplicacaograjas.Utilitarios.MetodosComuns;
+import com.cristianobadalotti.aplicacaograjas.Utilitarios.Validacoes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,13 +46,14 @@ public class EditarOvosActivity extends AppCompatActivity {
     private ArrayList<String> lista;
     private String tipoAve;
 
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editar_ovos);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("Edição de Lote de Ovos");
 
         ovos = new Ovos();
@@ -98,6 +101,7 @@ public class EditarOvosActivity extends AppCompatActivity {
 
     public void salvarOvos(View view) {
         if (!validaCampos()) {
+            criaProgress();
             this.ovos.setTipoAve(this.tipoAve); //getSelectedItem().toString()
             this.ovos.setQuantidade(Integer.parseInt(this.editQuantidade.getText().toString()));
             this.ovos.setQualidade(this.editQualidade.getText().toString());
@@ -140,20 +144,21 @@ public class EditarOvosActivity extends AppCompatActivity {
 
     private boolean validaCampos() {
 
-      /*  String quant = editQuantidade.getText().toString();
-        String max = editMaxAves.getText().toString();
-        String dataEntrada = editDataEntrada.getText().toString();
+        String lote = editLote.getText().toString();
+        String data = editData.getText().toString();
+        String quant = editQuantidade.getText().toString();
+
 
         boolean res = false;
 
-        if (res = Validacoes.isCampoVazio(quant)) {
-            editQuantidade.requestFocus();
+        if (res = Validacoes.isCampoVazio(lote)) {
+            editLote.requestFocus();
         } else {
-            if (res = Validacoes.isCampoVazio(max)) {
-                editMaxAves.requestFocus();
+            if (res = Validacoes.isCampoVazio(data)) {
+                editData.requestFocus();
             } else {
-                if (res = Validacoes.isCampoVazio(dataEntrada)) {
-                    editDataEntrada.requestFocus();
+                if (res = Validacoes.isCampoVazio(quant)) {
+                    editQuantidade.requestFocus();
                 }
             }
         }
@@ -166,8 +171,7 @@ public class EditarOvosActivity extends AppCompatActivity {
             ab.show();
         }
 
-        return res;*/
-      return false;
+        return res;
     }
 
     private DatePickerDialog.OnDateSetListener mDateSetListener =
@@ -186,8 +190,27 @@ public class EditarOvosActivity extends AppCompatActivity {
     }
 
     public void excluirOvos(View view) {
+        criaProgress();
         new OvosBD().apagar(this.ovos.getCodigo());
         finish();
     }
 
+    @Override
+    public void onBackPressed() {
+        criaProgress();
+        finish();
+    }
+
+    public void voltarMenu(View view) {
+        criaProgress();
+        finish();
+    }
+
+    private void criaProgress() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("AGUARDE");
+        progressDialog.setMessage("Carregando...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.show();
+    }
 }

@@ -94,6 +94,18 @@
         android:layout_marginTop="8dp"
         android:onClick="excluirVacina"
         android:text="@string/str_Excluir"
+        app:layout_constraintStart_toEndOf="@+id/button7"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDetalheVacina" />
+
+    <Button
+        android:id="@+id/button7"
+        android:layout_width="88dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:onClick="voltarVacina"
+        android:text="VOLTAR"
         app:layout_constraintStart_toEndOf="@+id/buttonSalvarVacina"
         app:layout_constraintTop_toBottomOf="@+id/editTextDetalheVacina" />
 </android.support.constraint.ConstraintLayout>

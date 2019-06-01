@@ -26,7 +26,6 @@ public class CorteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_corte);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("Lista de Granjas de Corte");
 
         dadosCorte = (RecyclerView)findViewById(R.id.dadosCorte);
@@ -70,9 +69,11 @@ public class CorteActivity extends AppCompatActivity {
     }
 
     public void abreNovoCorte(View view) {
-
-        Intent intent = new Intent(CorteActivity.this, SplashActivity.class);
-        intent.putExtra("CODE", 1);
+        Intent intent = new Intent(CorteActivity.this, EditarCorteActivity.class);
         startActivityForResult(intent, 0);
+    }
+
+    @Override
+    public void onBackPressed() {
     }
 }

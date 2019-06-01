@@ -3,6 +3,7 @@ package com.cristianobadalotti.aplicacaograjas.EntidadesBanco;
 import com.cristianobadalotti.aplicacaograjas.Banco.BD;
 import com.cristianobadalotti.aplicacaograjas.Entidades.Vacina;
 import com.cristianobadalotti.aplicacaograjas.Entidades._Default;
+import com.cristianobadalotti.aplicacaograjas.Utilitarios.Conversoes;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class VacinaBD extends _Default {
                     Vacina vacina = new Vacina();
 
                     vacina.setCodigoVacina(resultSet.getInt("codigo"));
-                    vacina.setDataTratamento(resultSet.getString("data"));
+                    vacina.setDataTratamento(resultSet.getString("data2"));
                     vacina.setDetalhe(resultSet.getString("observacao"));
                     vacina.setTipoTratamento(resultSet.getString("tipo"));
 
@@ -48,15 +49,16 @@ public class VacinaBD extends _Default {
 
     public void salvar(Vacina vacina) {
         String comando = "";
+        String dataC = new Conversoes().convertDateBRtoDataUS(vacina.getDataTratamento());
         if (vacina.getCodigoVacina() == -1) {
-            comando = String.format("INSERT INTO vacina (data, observacao, tipo) " +
-                            "VALUES ('%s', '%s', '%s');",
-                    vacina.getDataTratamento(), vacina.getDetalhe(), vacina.getTipoTratamento());
+            comando = String.format("INSERT INTO vacina (data2, observacao, tipo, data) " +
+                            "VALUES ('%s', '%s', '%s', '%s');",
+                    vacina.getDataTratamento(), vacina.getDetalhe(), vacina.getTipoTratamento(),dataC);
         } else {
             comando = String.format("UPDATE vacina " +
-                            "SET  data='%s', observacao='%s', tipo='%s'" +
+                            "SET  data2='%s', observacao='%s', tipo='%s', data='%s'" +
                             " WHERE codigo=%d;",
-                    vacina.getDataTratamento(), vacina.getDetalhe(), vacina.getTipoTratamento(),
+                    vacina.getDataTratamento(), vacina.getDetalhe(), vacina.getTipoTratamento(), dataC,
                     vacina.getCodigoVacina());
         }
 

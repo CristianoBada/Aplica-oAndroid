@@ -1,5 +1,6 @@
 package com.cristianobadalotti.aplicacaograjas.Forms;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,6 +18,7 @@ import com.cristianobadalotti.aplicacaograjas.R;
 public class IncubatorioActivity extends AppCompatActivity {
 
     private RecyclerView dadosIncubatorio;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +26,6 @@ public class IncubatorioActivity extends AppCompatActivity {
         setContentView(R.layout.activity_incubatorio);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("Lista de Incubatórios");
 
         dadosIncubatorio = (RecyclerView)findViewById(R.id.dadosIncubatorio);
@@ -56,11 +57,34 @@ public class IncubatorioActivity extends AppCompatActivity {
     }
 
     private void CreateAdapter() {
+        if (progressDialog != null) {
+            progressDialog.cancel();
+        }
         dadosIncubatorio.setAdapter(new IncubatorioAdapter(new IncubatorioBD().getLista()));
     }
 
     public void abreNovoIncubatorio(View view) {
+        criaProgress();
         Intent intent = new Intent(IncubatorioActivity.this, EditarIncubatorioActivity.class);
         startActivityForResult(intent, 0);
+    }
+
+    @Override
+    public void onBackPressed() {
+        criaProgress();
+        finish();
+    }
+
+    public void voltarMenu(View view) {
+        criaProgress();
+        finish();
+    }
+
+    private void criaProgress() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("AGUARDE");
+        progressDialog.setMessage("Carregando...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.show();
     }
 }

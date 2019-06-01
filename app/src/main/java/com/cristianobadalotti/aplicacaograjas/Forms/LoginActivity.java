@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.cristianobadalotti.aplicacaograjas.Entidades.Usuario;
 import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.UsuarioBD;
 import com.cristianobadalotti.aplicacaograjas.R;
 
@@ -38,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         if (valido) {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
+            finish();
         } else {
             AlertDialog.Builder ab = new AlertDialog.Builder(this);
             ab.setTitle("Aviso");
@@ -47,4 +47,11 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+    }
+
+    public void sairTela(View view) {
+        finish();
+    }
 }

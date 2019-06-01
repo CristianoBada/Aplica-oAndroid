@@ -5,7 +5,7 @@ import com.cristianobadalotti.aplicacaograjas.Banco.BD;
 import java.io.Serializable;
 import java.sql.ResultSet;
 
-public class Usuario extends _Default implements Serializable {
+public class Usuario implements Serializable {
     private String nome;
     private String senha;
 

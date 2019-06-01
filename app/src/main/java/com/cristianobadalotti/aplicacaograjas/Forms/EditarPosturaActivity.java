@@ -2,6 +2,7 @@ package com.cristianobadalotti.aplicacaograjas.Forms;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -49,13 +50,14 @@ public class EditarPosturaActivity extends AppCompatActivity {
     private ArrayList<String> lista;
     private String tipoAve;
 
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editar_postura);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("Edição de Granja Postura");
 
         postura = new Postura();
@@ -112,6 +114,7 @@ public class EditarPosturaActivity extends AppCompatActivity {
 
     public void salvarPostura(View view) {
         if (!validaCampos()) {
+            criaProgress();
             this.postura.setTipoAve(this.tipoAve); //getSelectedItem().toString()
             this.postura.setQuantidade(Integer.parseInt(this.editQuantidade.getText().toString()));
             this.postura.setMaximoAves(Integer.parseInt(this.editMaxAves.getText().toString()));
@@ -159,6 +162,7 @@ public class EditarPosturaActivity extends AppCompatActivity {
         String quant = editQuantidade.getText().toString();
         String max = editMaxAves.getText().toString();
         String dataEntrada = editDataEntrada.getText().toString();
+        String datasaida = editDataSaida.getText().toString();
 
         boolean res = false;
 
@@ -170,6 +174,10 @@ public class EditarPosturaActivity extends AppCompatActivity {
             } else {
                 if (res = Validacoes.isCampoVazio(dataEntrada)) {
                     editDataEntrada.requestFocus();
+                } else {
+                    if (res = Validacoes.isCampoVazio(datasaida)) {
+                        editDataSaida.requestFocus();
+                    }
                 }
             }
         }
@@ -210,8 +218,28 @@ public class EditarPosturaActivity extends AppCompatActivity {
     }
 
     public void excluirPostura(View view) {
+        criaProgress();
         PosturaBD posturaBD = new PosturaBD();
         posturaBD.apagar(this.postura.getCodigoPostura());
         finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        criaProgress();
+        finish();
+    }
+
+    public void voltarMenu(View view) {
+        criaProgress();
+        finish();
+    }
+
+    private void criaProgress() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("AGUARDE");
+        progressDialog.setMessage("Carregando...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.show();
     }
 }

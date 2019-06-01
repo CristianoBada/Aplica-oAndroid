@@ -217,4 +217,8 @@ public class EditarCorteActivity extends AppCompatActivity {
         new CorteBD().apagar(this.corte.getCodigoCorte());
         finish();
     }
+
+    @Override
+    public void onBackPressed() {
+    }
 }

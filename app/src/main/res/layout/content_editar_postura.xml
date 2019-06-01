@@ -161,6 +161,18 @@
         android:layout_marginTop="8dp"
         android:onClick="excluirPostura"
         android:text="Excluir"
+        app:layout_constraintStart_toEndOf="@+id/button12"
+        app:layout_constraintTop_toBottomOf="@+id/editTextObservacao" />
+
+    <Button
+        android:id="@+id/button12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:onClick="voltarMenu"
+        android:text="VOLTAR"
         app:layout_constraintStart_toEndOf="@+id/button"
         app:layout_constraintTop_toBottomOf="@+id/editTextObservacao" />
 </android.support.constraint.ConstraintLayout>

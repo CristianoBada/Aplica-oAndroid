@@ -188,4 +188,7 @@ public class EditarFinanceiroActivity extends AppCompatActivity {
         finish();
     }
 
+    @Override
+    public void onBackPressed() {
+    }
 }

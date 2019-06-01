@@ -24,7 +24,6 @@ public class FinanceiroActivity extends AppCompatActivity {
         setContentView(R.layout.activity_financeiro);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("Lista Financeiro");
 
         dadosFinanceiro= (RecyclerView)findViewById(R.id.dadosFinanceiro);
@@ -62,5 +61,9 @@ public class FinanceiroActivity extends AppCompatActivity {
     public void abreNovoFinanceiro(View view) {
         Intent intent = new Intent(FinanceiroActivity.this, EditarFinanceiroActivity.class);
         startActivityForResult(intent, 0);
+    }
+
+    @Override
+    public void onBackPressed() {
     }
 }

@@ -1,5 +1,6 @@
 package com.cristianobadalotti.aplicacaograjas.Forms;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,6 +18,7 @@ import com.cristianobadalotti.aplicacaograjas.R;
 public class PosturaListaActivity extends AppCompatActivity {
 
     private RecyclerView dadosPostura;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +26,6 @@ public class PosturaListaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_postura_lista);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("Lista de Granjas Postura");
 
         dadosPostura = (RecyclerView)findViewById(R.id.dadosPostura);
@@ -56,13 +57,37 @@ public class PosturaListaActivity extends AppCompatActivity {
     }
 
     private void CreateAdapter() {
+        if (progressDialog != null) {
+            progressDialog.cancel();
+        }
+
         PosturaAdapter posturaAdapter = new PosturaAdapter(new PosturaBD().getLista());
 
         dadosPostura.setAdapter(posturaAdapter);
     }
 
     public void abreNovoPostura(View view) {
+        criaProgress();
         Intent intent = new Intent(PosturaListaActivity.this, EditarPosturaActivity.class);
         startActivityForResult(intent, 0);
+    }
+
+    @Override
+    public void onBackPressed() {
+        criaProgress();
+        finish();
+    }
+
+    public void voltarMenu(View view) {
+        criaProgress();
+        finish();
+    }
+
+    private void criaProgress() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("AGUARDE");
+        progressDialog.setMessage("Carregando...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.show();
     }
 }

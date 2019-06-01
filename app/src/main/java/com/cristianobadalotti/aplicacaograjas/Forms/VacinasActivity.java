@@ -1,5 +1,6 @@
 package com.cristianobadalotti.aplicacaograjas.Forms;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,6 +18,7 @@ import com.cristianobadalotti.aplicacaograjas.R;
 public class VacinasActivity extends AppCompatActivity {
 
     private RecyclerView dadosVacina;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +26,6 @@ public class VacinasActivity extends AppCompatActivity {
         setContentView(R.layout.activity_vacinas);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("Lista de Tratamentos");
 
         dadosVacina = (RecyclerView)findViewById(R.id.dadosVacina);
@@ -56,11 +57,34 @@ public class VacinasActivity extends AppCompatActivity {
     }
 
     private void CreateAdapter() {
+        if (progressDialog != null) {
+            progressDialog.cancel();
+        }
         dadosVacina.setAdapter(new VacinaAdapter(new VacinaBD().getLista()));
     }
 
     public void abreNovoVacina(View view) {
+        criaProgress();
         Intent intent = new Intent(VacinasActivity.this, EditarVacinasActivity.class);
         startActivityForResult(intent, 0);
+    }
+
+    private void criaProgress() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("AGUARDE");
+        progressDialog.setMessage("Carregando...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        criaProgress();
+        finish();
+    }
+
+    public void voltarMenu(View view) {
+        criaProgress();
+        finish();
     }
 }

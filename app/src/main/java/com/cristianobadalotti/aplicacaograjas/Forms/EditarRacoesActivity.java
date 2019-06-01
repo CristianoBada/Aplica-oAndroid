@@ -159,4 +159,8 @@ public class EditarRacoesActivity extends AppCompatActivity {
         new RacaoBD().apagar(this.racao.getCodigoRacao());
         finish();
     }
+
+    @Override
+    public void onBackPressed() {
+    }
 }
