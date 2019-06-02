@@ -21,6 +21,7 @@ public class ViewHolderPostura extends RecyclerView.ViewHolder{
     public TextView textDataEntrada;
     public TextView textDataSaida;
     public TextView textTipoAve;
+    public TextView textCodigo;
     private ArrayList<Postura> dados;
 
     public ViewHolderPostura(@NonNull View itemView, final Context context) {
@@ -32,6 +33,7 @@ public class ViewHolderPostura extends RecyclerView.ViewHolder{
         textDataEntrada = itemView.findViewById(R.id.textViewDataEntrada);
         textDataSaida = itemView.findViewById(R.id.textViewDataSaida);
         textTipoAve = itemView.findViewById(R.id.textViewTipoAve);
+        textCodigo = itemView.findViewById(R.id.textViewCodigoPostura);
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -35,6 +35,7 @@ public class EditarFinanceiroActivity extends AppCompatActivity {
     private Spinner spinnerTrasacao;
     private String trasacao;
     private EditText editDetalhe;
+    private EditText editData;
 
     private Financeiro financeiro;
 
@@ -42,6 +43,11 @@ public class EditarFinanceiroActivity extends AppCompatActivity {
     private ArrayList<String> listaProdutos;
     private String produto;
     private ProgressDialog progressDialog;
+
+    //Codigo do calendario
+    private Calendario calendario;
+    static final int DATE_ID = 0;
+    //Codigo do calendario
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,12 +58,21 @@ public class EditarFinanceiroActivity extends AppCompatActivity {
         setTitle("Edição Financeiro");
 
         financeiro = new Financeiro();
+        calendario = new Calendario();
 
         criaListaProdutos();
         criaListaTrasacao();
 
         editDetalhe = (EditText)findViewById(R.id.editTextDetalheFinanceiro);
         editValor = (EditText)findViewById(R.id.editTextValorFinanceiro);
+
+        editData = (EditText) findViewById(R.id.editTextDataFinanceiro);
+        editData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialog(DATE_ID);
+            }
+        });
 
         verificaParametros();
     }
@@ -89,8 +104,8 @@ public class EditarFinanceiroActivity extends AppCompatActivity {
     private void criaListaTrasacao() {
         spinnerTrasacao = (Spinner) findViewById(R.id.spinnerEntradaFinanceiro);
         listaTrasacao = new ArrayList<>();
-        listaTrasacao.add("COMPRA");
-        listaTrasacao.add("VENDA");
+        listaTrasacao.add("entrada");
+        listaTrasacao.add("saida");
 
         List<String> list = listaTrasacao;
         trasacao = list.get(0);
@@ -120,6 +135,7 @@ public class EditarFinanceiroActivity extends AppCompatActivity {
             this.financeiro.setNome(this.produto);
             this.financeiro.setDetalhe(this.editDetalhe.getText().toString());
             this.financeiro.setEntrasaida(this.trasacao);
+            this.financeiro.setData(this.editData.getText().toString());
             FinanceiroBD financeiroBD = new FinanceiroBD();
             financeiroBD.salvar(this.financeiro);
 
@@ -141,6 +157,7 @@ public class EditarFinanceiroActivity extends AppCompatActivity {
                 this.editDetalhe.setText(financeiro.getDetalhe());
                 this.spinnerProdutos.setSelection(MetodosComuns.achaPosicao(new ProdutoBD().getListaString(), financeiro.getNome()));
                 this.spinnerTrasacao.setSelection(MetodosComuns.achaPosicao(listaTrasacao, financeiro.getEntrasaida()));
+                this.editData.setText(financeiro.getData());
 
             } else {
                 opcaoExcluirFinanceiro();
@@ -199,5 +216,20 @@ public class EditarFinanceiroActivity extends AppCompatActivity {
         progressDialog.setMessage("Carregando...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.show();
+    }
+
+    private DatePickerDialog.OnDateSetListener mDateSetListener =
+            new DatePickerDialog.OnDateSetListener() {
+                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                    calendario.setmYearIni(year);
+                    calendario.setmMonthIni(monthOfYear);
+                    calendario.setmDayIni(dayOfMonth);
+                    editData.setText(calendario.getText());
+                }
+            };
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        return new DatePickerDialog(this, mDateSetListener, calendario.getsYearIni(), calendario.getsMonthIni(), calendario.getsDayIni());
     }
 }

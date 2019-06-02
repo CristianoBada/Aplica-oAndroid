@@ -37,6 +37,7 @@ public class PosturaAdapter extends RecyclerView.Adapter<ViewHolderPostura> {
 
         if ( (dados != null) && (dados.size() > 0)) {
             Postura postura = dados.get(i);
+            viewHolder.textCodigo.setText("Código: " + postura.getCodigoPostura());
             viewHolder.textComentario.setText("Observção: " + postura.getComentario());
             viewHolder.textDataEntrada.setText("Data de Entrada: " + postura.getDataentrada());
             viewHolder.textDataSaida.setText("Data de Saida: " + postura.getDatasaida());

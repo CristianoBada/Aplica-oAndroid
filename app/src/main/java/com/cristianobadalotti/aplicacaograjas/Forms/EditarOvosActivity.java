@@ -19,7 +19,7 @@ import android.support.v7.app.AlertDialog;
 
 import com.cristianobadalotti.aplicacaograjas.Entidades.Ovos;
 import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.OvosBD;
-import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.TipoAveBD;
+import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.PosturaBD;
 import com.cristianobadalotti.aplicacaograjas.R;
 import com.cristianobadalotti.aplicacaograjas.Utilitarios.Calendario;
 import com.cristianobadalotti.aplicacaograjas.Utilitarios.MetodosComuns;
@@ -36,15 +36,14 @@ public class EditarOvosActivity extends AppCompatActivity {
     //Codigo do calendario
 
     private EditText editData;
-    private Spinner spinnerTipoAve;
+    private Spinner spinnerPostura;
     private EditText editQuantidade;
-    private EditText editLote;
     private EditText editQualidade;
 
     private Ovos ovos;
 
     private ArrayList<String> lista;
-    private String tipoAve;
+    private int pos = 0;
 
     private ProgressDialog progressDialog;
 
@@ -60,29 +59,8 @@ public class EditarOvosActivity extends AppCompatActivity {
 
         calendario = new Calendario();
 
-        spinnerTipoAve = (Spinner) findViewById(R.id.spinnerTipoAveOvos);
-        lista = new TipoAveBD().getListaString();
-        List<String> list = lista;
-        tipoAve = lista.get(0);
+        criaListaPostura();
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, list);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
-        spinnerTipoAve.setAdapter(dataAdapter);
-
-        spinnerTipoAve.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                tipoAve = lista.get(position);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        editLote = (EditText)findViewById(R.id.editTextLoteOvos);
         editQualidade = (EditText)findViewById(R.id.editTextQualidadeOvos);
         editQuantidade = (EditText)findViewById(R.id.editTextQuantidadeOvos);
 
@@ -99,14 +77,38 @@ public class EditarOvosActivity extends AppCompatActivity {
 
     }
 
+    private void criaListaPostura(){
+        lista = new PosturaBD().getListaString();
+        spinnerPostura = (Spinner) findViewById(R.id.spinnerOPostura);
+        List<String> list = lista;
+        pos = 0;
+
+        ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, list);
+        dataAdapter2.setDropDownViewResource(android.R.layout.simple_list_item_1);
+        spinnerPostura.setAdapter(dataAdapter2);
+
+        spinnerPostura.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                pos = position;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
     public void salvarOvos(View view) {
         if (!validaCampos()) {
             criaProgress();
-            this.ovos.setTipoAve(this.tipoAve); //getSelectedItem().toString()
+            this.ovos.setTipoAve(new PosturaBD().getLista().get(pos).getTipoAve()); //getSelectedItem().toString()
             this.ovos.setQuantidade(Integer.parseInt(this.editQuantidade.getText().toString()));
             this.ovos.setQualidade(this.editQualidade.getText().toString());
             this.ovos.setData(this.editData.getText().toString());
-            this.ovos.setLote(this.editLote.getText().toString());
+            this.ovos.setPostura(new PosturaBD().getLista().get(pos).getCodigoPostura());
             OvosBD ovosBD = new OvosBD();
             ovosBD.salvar(this.ovos);
 
@@ -127,8 +129,7 @@ public class EditarOvosActivity extends AppCompatActivity {
                 this.editQualidade.setText(ovos.getQualidade()+"");
                 this.editQuantidade.setText(ovos.getQuantidade()+"");
                 this.editData.setText(ovos.getData());
-                this.editLote.setText(ovos.getLote());
-                this.spinnerTipoAve.setSelection(MetodosComuns.achaPosicao(new TipoAveBD().getListaString(), ovos.getTipoAve()));
+                this.spinnerPostura.setSelection(MetodosComuns.achaPosicao(lista, ovos.getPostura() + " " + ovos.getTipoAve()));
             } else {
                 opcaoExcluirOvos();
             }
@@ -144,16 +145,13 @@ public class EditarOvosActivity extends AppCompatActivity {
 
     private boolean validaCampos() {
 
-        String lote = editLote.getText().toString();
         String data = editData.getText().toString();
         String quant = editQuantidade.getText().toString();
 
 
         boolean res = false;
 
-        if (res = Validacoes.isCampoVazio(lote)) {
-            editLote.requestFocus();
-        } else {
+
             if (res = Validacoes.isCampoVazio(data)) {
                 editData.requestFocus();
             } else {
@@ -161,7 +159,7 @@ public class EditarOvosActivity extends AppCompatActivity {
                     editQuantidade.requestFocus();
                 }
             }
-        }
+
 
         if (res) {
             AlertDialog.Builder ab = new AlertDialog.Builder(this);

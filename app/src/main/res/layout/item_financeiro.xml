@@ -12,6 +12,12 @@
         android:background="?android:attr/listDivider" />
 
     <TextView
+        android:id="@+id/textViewCodigoFinanceiro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    <TextView
         android:id="@+id/textViewNomeFinanceiro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,13 +30,19 @@
         android:text="TextView" />
 
     <TextView
-        android:id="@+id/textViewDetalheFinanceiro"
+        android:id="@+id/textViewEntradaFinanceiro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="TextView" />
 
     <TextView
-        android:id="@+id/textViewEntradaFinanceiro"
+        android:id="@+id/textViewDataFinanceiro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/textViewDetalheFinanceiro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="TextView" />

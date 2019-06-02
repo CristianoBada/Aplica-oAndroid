@@ -12,7 +12,13 @@
         android:background="?android:attr/listDivider" />
 
     <TextView
-        android:id="@+id/textViewLoteOvos"
+        android:id="@+id/textViewCodigoOvo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/textViewOvosPostura"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="TextView" />

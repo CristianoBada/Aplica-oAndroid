@@ -13,10 +13,11 @@ import android.widget.TextView;
 import com.cristianobadalotti.aplicacaograjas.Entidades.Ovos;
 import com.cristianobadalotti.aplicacaograjas.Forms.EditarOvosActivity;
 import com.cristianobadalotti.aplicacaograjas.R;
+import com.cristianobadalotti.aplicacaograjas.ViewHolders.ViewHolderOvos;
 
 import java.util.ArrayList;
 
-public class OvosAdapter extends RecyclerView.Adapter<OvosAdapter.ViewHolderOvos> {
+public class OvosAdapter extends RecyclerView.Adapter<ViewHolderOvos> {
 
     private ArrayList<Ovos> dados;
 
@@ -26,23 +27,25 @@ public class OvosAdapter extends RecyclerView.Adapter<OvosAdapter.ViewHolderOvos
 
     @NonNull
     @Override
-    public OvosAdapter.ViewHolderOvos onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public ViewHolderOvos onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater layoutInflater = LayoutInflater.from(viewGroup.getContext());
 
         View view = layoutInflater.inflate(R.layout.item_ovos, viewGroup, false);
 
-        OvosAdapter.ViewHolderOvos holderOvos = new OvosAdapter.ViewHolderOvos(view, viewGroup.getContext());
+        ViewHolderOvos holderOvos = new ViewHolderOvos(view, viewGroup.getContext());
+        holderOvos.setDados(dados);
 
         return holderOvos;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull OvosAdapter.ViewHolderOvos viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolderOvos viewHolder, int i) {
 
         if ( (dados != null) && (dados.size() > 0)) {
             Ovos ovos = dados.get(i);
+            viewHolder.textCodigo.setText("Código: " + ovos.getCodigo());
             viewHolder.textData.setText("Data: " + ovos.getData());
-            viewHolder.textLote.setText("Lote: " + ovos.getLote());
+            viewHolder.textOPostura.setText("Código Postura: " + ovos.getPostura());
             viewHolder.textQualidade.setText("Qualidade: " + ovos.getQualidade());
             viewHolder.textQuantidade.setText("Quantidade de aves: " + ovos.getQuantidade());
             viewHolder.textTipoAve.setText("Tipo de ave: " + ovos.getTipoAve());
@@ -52,42 +55,6 @@ public class OvosAdapter extends RecyclerView.Adapter<OvosAdapter.ViewHolderOvos
     @Override
     public int getItemCount() {
         return dados.size();
-    }
-
-    public class ViewHolderOvos extends RecyclerView.ViewHolder {
-
-        public TextView textQuantidade;
-        public TextView textQualidade;
-        public TextView textData;
-        public TextView textLote;
-        public TextView textTipoAve;
-
-        public ViewHolderOvos(@NonNull View itemView, final Context context) {
-            super(itemView);
-
-            textQuantidade = itemView.findViewById(R.id.textViewQuantidadeOvos);
-            textQualidade = itemView.findViewById(R.id.textViewQualidadeOvos);
-            textData = itemView.findViewById(R.id.textViewDataOvos);
-            textLote = itemView.findViewById(R.id.textViewLoteOvos);
-            textTipoAve = itemView.findViewById(R.id.textViewTipoAveOvos);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    if (dados.size() > 0) {
-
-                        Ovos ovos = dados.get(getLayoutPosition());
-
-                        Intent intent = new Intent(context, EditarOvosActivity.class);
-
-                        intent.putExtra("OVOS", ovos);
-
-                        ((AppCompatActivity) context).startActivityForResult(intent, 0);
-                    }
-                }
-            });
-        }
     }
 }
 

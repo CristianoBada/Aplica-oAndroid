@@ -31,4 +31,5 @@
     <string name="str_Excluir">EXCLUIR</string>
     <string name="title_activity_splash">SplashActivity</string>
     <string name="voltar">VOLTAR</string>
+    <string name="cod_postura">Código Postura</string>
 </resources>

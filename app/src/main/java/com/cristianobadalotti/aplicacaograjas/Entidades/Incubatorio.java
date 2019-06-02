@@ -5,13 +5,13 @@ import java.io.Serializable;
 public class Incubatorio implements Serializable {
 
     private int codigoIncubatorio = -1;
-    private String loteOvos;
     private Integer temperatura;
     private Integer umidade = 0;
     private Integer tempoChocar;
     private String dataInicio;
     private Integer mortalidade = 0;
     private String tipoAve;
+    private int codigoOvos;
 
     public int getCodigoIncubatorio() {
         return codigoIncubatorio;
@@ -19,14 +19,6 @@ public class Incubatorio implements Serializable {
 
     public void setCodigoIncubatorio(int codigoIncubatorio) {
         this.codigoIncubatorio = codigoIncubatorio;
-    }
-
-    public String getLoteOvos() {
-        return loteOvos;
-    }
-
-    public void setLoteOvos(String loteOvos) {
-        this.loteOvos = loteOvos;
     }
 
     public Integer getTemperatura() {
@@ -75,5 +67,13 @@ public class Incubatorio implements Serializable {
 
     public void setTipoAve(String tipoAve) {
         this.tipoAve = tipoAve;
+    }
+
+    public int getCodigoOvos() {
+        return codigoOvos;
+    }
+
+    public void setCodigoOvos(int codigoOvos) {
+        this.codigoOvos = codigoOvos;
     }
 }

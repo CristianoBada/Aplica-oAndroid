@@ -1,6 +1,7 @@
 package com.cristianobadalotti.aplicacaograjas.EntidadesBanco;
 
 import com.cristianobadalotti.aplicacaograjas.Banco.BD;
+import com.cristianobadalotti.aplicacaograjas.Entidades.TipoAve;
 import com.cristianobadalotti.aplicacaograjas.Entidades._Default;
 
 import java.sql.ResultSet;
@@ -28,5 +29,25 @@ public class TipoAveBD extends _Default {
         }
 
         return lista;
+    }
+
+    public int getTempoChocar(String nome) {
+        BD bd = new BD();
+        int ret = 0;
+        try {
+            String comando = String.format("SELECT * FROM tipo_ave WHERE nome_ave=%s;", nome);
+            ResultSet resultSet = bd.select(comando);
+
+            if (resultSet != null) {
+
+                   ret = resultSet.getInt("tempo_chocagem");
+            }
+
+        } catch (Exception e) {
+            this._menssagem = e.getMessage();
+            this._status = false;
+        }
+
+        return ret;
     }
 }

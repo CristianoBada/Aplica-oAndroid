@@ -3,6 +3,7 @@ package com.cristianobadalotti.aplicacaograjas.EntidadesBanco;
 import com.cristianobadalotti.aplicacaograjas.Banco.BD;
 import com.cristianobadalotti.aplicacaograjas.Entidades.Financeiro;
 import com.cristianobadalotti.aplicacaograjas.Entidades._Default;
+import com.cristianobadalotti.aplicacaograjas.Utilitarios.Conversoes;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class FinanceiroBD extends _Default {
                     financeiro.setDetalhe(resultSet.getString("observacao"));
                     financeiro.setNome(resultSet.getString("nome"));
                     financeiro.setValor(resultSet.getDouble("valor"));
+                    financeiro.setData(resultSet.getString("data2"));
 
                     lista.add(financeiro);
                     financeiro = null;
@@ -50,15 +52,16 @@ public class FinanceiroBD extends _Default {
     public void salvar(Financeiro financeiro) {
         String comando = "";
         if (financeiro.getCodigoFinanceiro() == -1) {
-            comando = String.format("INSERT INTO financeiro (entrasaida, observacao, nome, valor) " +
-                            "VALUES ('%s', '%s', '%s', %f);",
-                    financeiro.getEntrasaida(), financeiro.getDetalhe(), financeiro.getNome(), financeiro.getValor());
+            comando = String.format("INSERT INTO financeiro (entrasaida, observacao, nome, valor, data2, data) " +
+                            "VALUES ('%s', '%s', '%s', %f, '%s', '%s');",
+                    financeiro.getEntrasaida(), financeiro.getDetalhe(), financeiro.getNome(), financeiro.getValor(),
+                    financeiro.getData(), new Conversoes().convertDateBRtoDataUS(financeiro.getData()));
         } else {
             comando = String.format("UPDATE financeiro " +
-                            "SET  entrasaida='%s', observacao='%s', nome='%s', valor=%f" +
+                            "SET  entrasaida='%s', observacao='%s', nome='%s', valor=%f, data2='%s', data='%s'" +
                             " WHERE codigo=%d;",
                     financeiro.getEntrasaida(), financeiro.getDetalhe(), financeiro.getNome(), financeiro.getValor(),
-                    financeiro.getCodigoFinanceiro());
+                    financeiro.getData(), new Conversoes().convertDateBRtoDataUS(financeiro.getData()), financeiro.getCodigoFinanceiro());
         }
 
         BD bd = new BD();

@@ -19,6 +19,7 @@ import android.support.v7.app.AlertDialog;
 
 import com.cristianobadalotti.aplicacaograjas.Entidades.Incubatorio;
 import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.IncubatorioBD;
+import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.OvosBD;
 import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.TipoAveBD;
 import com.cristianobadalotti.aplicacaograjas.R;
 import com.cristianobadalotti.aplicacaograjas.Utilitarios.Calendario;
@@ -36,18 +37,16 @@ public class EditarIncubatorioActivity extends AppCompatActivity {
     //Codigo do calendario
 
     private EditText editData;
-    private Spinner spinnerTipoAve;
+    private Spinner spinnerOvos;
     private EditText editTemperatura;
-    private EditText editLoteOvos;
     private EditText editUmidade;
     private EditText editMortalidade;
-    private EditText editTempo;
 
     private Incubatorio incubatorio;
 
     private ArrayList<String> lista;
-    private String tipoAve;
     private ProgressDialog progressDialog;
+    private int pos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,34 +60,11 @@ public class EditarIncubatorioActivity extends AppCompatActivity {
 
         calendario = new Calendario();
 
-        spinnerTipoAve = (Spinner) findViewById(R.id.spinnerTipoAveIncubatorio);
-        lista = new TipoAveBD().getListaString();
-        List<String> list = lista;
-        tipoAve = lista.get(0);
+        criaListaOvos();
 
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, list);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
-        spinnerTipoAve.setAdapter(dataAdapter);
-
-        spinnerTipoAve.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                tipoAve = lista.get(position);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        editLoteOvos = (EditText)findViewById(R.id.editTextLoteOvosIncubatorio);
         editTemperatura = (EditText)findViewById(R.id.editTextTemperaturaIncubatorio);
-        editLoteOvos = (EditText)findViewById(R.id.editTextLoteOvosIncubatorio);
         editUmidade = (EditText)findViewById(R.id.editTextUmidadeIncubatorio);
         editMortalidade = (EditText)findViewById(R.id.editTextMortalidadeIncubatorio);
-        editTempo = (EditText)findViewById(R.id.editTextTemperaturaIncubatorio);
 
         editData= (EditText)findViewById(R.id.editTextDataIncubatorio);
 
@@ -102,20 +78,45 @@ public class EditarIncubatorioActivity extends AppCompatActivity {
         verificaParametros();
     }
 
+    private void criaListaOvos() {
+        spinnerOvos = (Spinner) findViewById(R.id.spinnerOvosIncubatorio);
+        lista = new OvosBD().getListaString();
+        List<String> list = lista;
+        pos = 0;
+
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, list);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
+        spinnerOvos.setAdapter(dataAdapter);
+
+        spinnerOvos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                pos = position;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
     public void salvarIncubatorio(View view) {
         if (!validaCampos()) {
             criaProgress();
-            this.incubatorio.setLoteOvos(this.editLoteOvos.getText().toString());
+            this.incubatorio.setCodigoOvos(new OvosBD().getLista().get(pos).getCodigo());
             if (!this.editUmidade.getText().toString().isEmpty()) {
                 this.incubatorio.setUmidade(Integer.parseInt(this.editUmidade.getText().toString()));
             }
-            this.incubatorio.setTipoAve(this.tipoAve);
-            this.incubatorio.setTempoChocar(Integer.parseInt(this.editTempo.getText().toString()));
+            this.incubatorio.setTipoAve(new OvosBD().getLista().get(pos).getTipoAve());
             this.incubatorio.setTemperatura(Integer.parseInt(this.editTemperatura.getText().toString()));
             if (!this.editMortalidade.getText().toString().isEmpty()) {
                 this.incubatorio.setMortalidade(Integer.parseInt(this.editMortalidade.getText().toString()));
             }
             this.incubatorio.setDataInicio(this.editData.getText().toString());
+            this.incubatorio.setTempoChocar(new TipoAveBD().getTempoChocar(new OvosBD().getLista().get(pos).getTipoAve()));
+
             IncubatorioBD incubatorioBD = new IncubatorioBD();
             incubatorioBD.salvar(this.incubatorio);
 
@@ -133,13 +134,11 @@ public class EditarIncubatorioActivity extends AppCompatActivity {
             if ((bundle != null) && (bundle.containsKey("INCUBATORIO"))) {
                 incubatorio = (Incubatorio) bundle.getSerializable("INCUBATORIO");
 
-                this.editLoteOvos.setText(incubatorio.getLoteOvos()+"");
                 this.editData.setText(incubatorio.getDataInicio()+"");
                 this.editMortalidade.setText(incubatorio.getMortalidade()+"");
                 this.editTemperatura.setText(incubatorio.getTemperatura()+"");
-                this.editTempo.setText(incubatorio.getTempoChocar()+"");
                 this.editUmidade.setText(incubatorio.getUmidade()+"");
-                this.spinnerTipoAve.setSelection(MetodosComuns.achaPosicao(new TipoAveBD().getListaString(), incubatorio.getTipoAve()));
+                this.spinnerOvos.setSelection(MetodosComuns.achaPosicao(new OvosBD().getListaString(), incubatorio.getCodigoOvos() + " " + incubatorio.getTipoAve()));
             } else {
                 opcaoExcluirIncubatorio();
             }
@@ -155,27 +154,21 @@ public class EditarIncubatorioActivity extends AppCompatActivity {
 
     private boolean validaCampos() {
 
-        String loteOvo = editLoteOvos.getText().toString();
         String temperatura = editTemperatura.getText().toString();
-        String tempo = editTempo.getText().toString();
         String data = editData.getText().toString();
 
         boolean res = false;
 
-        if (res = Validacoes.isCampoVazio(loteOvo)) {
-            editLoteOvos.requestFocus();
-        } else {
+
             if (res = Validacoes.isCampoVazio(temperatura)) {
                 editTemperatura.requestFocus();
             } else {
-                if (res = Validacoes.isCampoVazio(tempo)) {
-                    editTempo.requestFocus();
-                } else {
+
                     if (res = Validacoes.isCampoVazio(data)) {
                         editData.requestFocus();
                     }
-                }
-            }
+
+
         }
 
         if (res) {

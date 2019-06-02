@@ -3,6 +3,7 @@ package com.cristianobadalotti.aplicacaograjas.EntidadesBanco;
 import com.cristianobadalotti.aplicacaograjas.Banco.BD;
 import com.cristianobadalotti.aplicacaograjas.Entidades.Incubatorio;
 import com.cristianobadalotti.aplicacaograjas.Entidades._Default;
+import com.cristianobadalotti.aplicacaograjas.Utilitarios.Conversoes;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -21,8 +22,8 @@ public class IncubatorioBD  extends _Default {
                     Incubatorio incubatorio = new Incubatorio();
 
                     incubatorio.setCodigoIncubatorio(resultSet.getInt("codigo"));
-                    incubatorio.setDataInicio(resultSet.getString("inicio"));
-                    incubatorio.setLoteOvos(resultSet.getString("loteovos"));
+                    incubatorio.setDataInicio(resultSet.getString("inicio2"));
+                    incubatorio.setCodigoOvos(resultSet.getInt("ovos"));
                     incubatorio.setMortalidade(resultSet.getInt("mortalidade"));
                     incubatorio.setTemperatura(resultSet.getInt("temperatura"));
                     incubatorio.setTempoChocar(resultSet.getInt("tempo"));
@@ -54,16 +55,16 @@ public class IncubatorioBD  extends _Default {
     public void salvar(Incubatorio incubatorio) {
         String comando = "";
         if (incubatorio.getCodigoIncubatorio() == -1) {
-            comando = String.format("INSERT INTO incubatorio (inicio, loteovos, mortalidade, temperatura, tempo, tipoave, umidade) " +
-                            "VALUES ('%s', '%s', %d, %d, %d, '%s', %d);",
-                    incubatorio.getDataInicio(), incubatorio.getLoteOvos(), incubatorio.getMortalidade(), incubatorio.getTemperatura(), incubatorio.getTempoChocar(),
-                    incubatorio.getTipoAve(), incubatorio.getUmidade());
+            comando = String.format("INSERT INTO incubatorio (inicio2, ovos, mortalidade, temperatura, tempo, tipoave, umidade, inicio) " +
+                            "VALUES ('%s', %d, %d, %d, %d, '%s', %d, '%s');",
+                    incubatorio.getDataInicio(), incubatorio.getCodigoOvos(), incubatorio.getMortalidade(), incubatorio.getTemperatura(), incubatorio.getTempoChocar(),
+                    incubatorio.getTipoAve(), incubatorio.getUmidade(), new Conversoes().convertDateBRtoDataUS(incubatorio.getDataInicio()));
         } else {
             comando = String.format("UPDATE incubatorio " +
-                            "SET  inicio='%s', loteovos='%s', mortalidade=%d, temperatura=%d, tempo=%d, tipoave='%s', umidade=%d" +
+                            "SET  inicio2='%s', ovos=%d, mortalidade=%d, temperatura=%d, tempo=%d, tipoave='%s', umidade=%d, inicio='%s'" +
                             " WHERE codigo=%d;",
-                    incubatorio.getDataInicio(), incubatorio.getLoteOvos(), incubatorio.getMortalidade(), incubatorio.getTemperatura(), incubatorio.getTempoChocar(),
-                    incubatorio.getTipoAve(), incubatorio.getUmidade(), incubatorio.getCodigoIncubatorio());
+                    incubatorio.getDataInicio(), incubatorio.getCodigoOvos(), incubatorio.getMortalidade(), incubatorio.getTemperatura(), incubatorio.getTempoChocar(),
+                    incubatorio.getTipoAve(), incubatorio.getUmidade(), new Conversoes().convertDateBRtoDataUS(incubatorio.getDataInicio()), incubatorio.getCodigoIncubatorio());
         }
 
         BD bd = new BD();

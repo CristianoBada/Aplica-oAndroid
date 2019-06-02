@@ -11,8 +11,7 @@ public class Ovos implements Serializable {
     private int quantidade;
     private String qualidade;
     private String data;
-    private String incubacao;
-    private String lote;
+    private int postura;
     private String tipoAve;
 
     public Ovos() {
@@ -20,8 +19,6 @@ public class Ovos implements Serializable {
         this.codigo = -1;
         this.data = "";
         this.qualidade = "";
-        this.incubacao = "F";
-        this.lote = "";
         this.quantidade = 0;
         this.tipoAve = "";
     }
@@ -58,27 +55,19 @@ public class Ovos implements Serializable {
         this.data = data;
     }
 
-    public String getIncubacao() {
-        return incubacao;
-    }
-
-    public void setIncubacao(String incubacao) {
-        this.incubacao = incubacao;
-    }
-
-    public String getLote() {
-        return lote;
-    }
-
-    public void setLote(String lote) {
-        this.lote = lote;
-    }
-
     public String getTipoAve() {
         return tipoAve;
     }
 
     public void setTipoAve(String tipoAve) {
         this.tipoAve = tipoAve;
+    }
+
+    public int getPostura() {
+        return postura;
+    }
+
+    public void setPostura(int postura) {
+        this.postura = postura;
     }
 }

@@ -45,6 +45,27 @@ public class PosturaBD extends _Default {
         return lista;
     }
 
+    public ArrayList<String> getListaString() {
+        BD bd = new BD();
+        ArrayList<String> lista = new ArrayList<>();
+
+        try {
+            ResultSet resultSet = bd.select("SELECT * FROM postura;");
+
+            if (resultSet != null) {
+                while (resultSet.next()) {
+                    lista.add(resultSet.getInt("codigo") + " " + resultSet.getString("tipoave"));
+                }
+            }
+
+        } catch (Exception e) {
+            this._menssagem = e.getMessage();
+            this._status = false;
+        }
+
+        return lista;
+    }
+
     public void apagar(int codigo) {
         String comando = String.format("DELETE FROM postura WHERE codigo=%d;", codigo);
 
@@ -67,7 +88,7 @@ public class PosturaBD extends _Default {
                             " WHERE codigo=%d;",
                     postura.getComentario(), postura.getDataentrada(), postura.getDatasaida(), postura.getMaximoAves(),
                     postura.getQuantidade(), postura.getTipoAve(),
-                    new Conversoes().convertDateBRtoDataUS(postura.getDataentrada()), new Conversoes().convertDateBRtoDataUS(postura.getDatasaida()),
+                    new Conversoes().convertDateBRtoDataUS(postura.getDatasaida()),
                     postura.getCodigoPostura());
         }
 

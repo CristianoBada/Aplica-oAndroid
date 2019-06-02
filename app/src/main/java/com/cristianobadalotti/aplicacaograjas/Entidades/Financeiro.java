@@ -8,6 +8,7 @@ public class Financeiro implements Serializable {
     private Double valor;
     private String detalhe;
     private String entrasaida;
+    private String data;
 
     public int getCodigoFinanceiro() {
         return codigoFinanceiro;
@@ -47,5 +48,13 @@ public class Financeiro implements Serializable {
 
     public void setEntrasaida(String entrasaida) {
         this.entrasaida = entrasaida;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
     }
 }

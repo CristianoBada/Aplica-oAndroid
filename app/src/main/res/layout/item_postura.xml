@@ -5,6 +5,18 @@
     android:foreground="?attr/selectableItemBackground"
     android:orientation="vertical">
 
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
+
+    <TextView
+        android:id="@+id/textViewCodigoPostura"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
     <TextView
         android:id="@+id/textViewTipoAve"
         android:layout_width="match_parent"
@@ -41,9 +53,4 @@
         android:layout_height="wrap_content"
         android:text="TextView" />
 
-    <View
-        android:id="@+id/divider2"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?android:attr/listDivider" />
 </LinearLayout>
