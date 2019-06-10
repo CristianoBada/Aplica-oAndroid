@@ -19,9 +19,12 @@ import android.widget.Toast;
 
 import com.cristianobadalotti.aplicacaograjas.Entidades.Corte;
 import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.CorteBD;
+import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.RacaoBD;
 import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.TipoAveBD;
+import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.VacinaBD;
 import com.cristianobadalotti.aplicacaograjas.R;
 import com.cristianobadalotti.aplicacaograjas.Utilitarios.Calendario;
+import com.cristianobadalotti.aplicacaograjas.Utilitarios.Conversoes;
 import com.cristianobadalotti.aplicacaograjas.Utilitarios.MetodosComuns;
 import com.cristianobadalotti.aplicacaograjas.Utilitarios.Validacoes;
 
@@ -58,7 +61,6 @@ public class EditarCorteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_editar_corte);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("Edição de Granja de Corte");
 
         corte = new Corte();
@@ -93,7 +95,9 @@ public class EditarCorteActivity extends AppCompatActivity {
         editMortalidade = (EditText)findViewById(R.id.editTextMortalidadeCorte);
 
         editDataEntrada = (EditText)findViewById(R.id.editTextDataEntradaCorte);
+        editDataEntrada.setKeyListener(null);
         editDataSaida = (EditText)findViewById(R.id.editTextDataSaidaCorte);
+        editDataSaida.setKeyListener(null);
 
         editDataEntrada.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,7 +150,7 @@ public class EditarCorteActivity extends AppCompatActivity {
                 this.editMaxAves.setText(corte.getMaximo()+"");
                 this.editQuantidade.setText(corte.getQuantidadeAves()+"");
                 this.editDataSaida.setText(corte.getDataSaida());
-                this.editDataEntrada.setText(corte.getDataSaida());
+                this.editDataEntrada.setText(corte.getDataEntrada());
                 this.editObservacao.setText(corte.getComentario());
                 this.spinnerTipoAve.setSelection(MetodosComuns.achaPosicao(new TipoAveBD().getListaString(), corte.getTipoAve()));
                 this.editMortalidade.setText(this.corte.getMortalidade()+"");
@@ -168,30 +172,53 @@ public class EditarCorteActivity extends AppCompatActivity {
         String quant = editQuantidade.getText().toString();
         String max = editMaxAves.getText().toString();
         String dataEntrada = editDataEntrada.getText().toString();
+        String datasaida = editDataSaida.getText().toString();
 
         boolean res = false;
-
+        String msg = "";
         if (res = Validacoes.isCampoVazio(quant)) {
             editQuantidade.requestFocus();
+            msg = "Há campos invalidos ou em  branco!";
         } else {
             if (res = Validacoes.isCampoVazio(max)) {
                 editMaxAves.requestFocus();
+                msg = "Há campos invalidos ou em  branco!";
             } else {
                 if (res = Validacoes.isCampoVazio(dataEntrada)) {
                     editDataEntrada.requestFocus();
+                    msg = "Há campos invalidos ou em  branco!";
+                } else {
+                    int q = Integer.parseInt(quant);
+                    int m = Integer.parseInt(max);
+                    if (q > m) {
+                        msg = "Numero maximo de aves não pode ser inferior a quantidade.";
+                        res = true;
+                        editMaxAves.requestFocus();
+                    } else {
+                        Conversoes conversoes = new Conversoes();
+                        if (!Validacoes.isCampoVazio(datasaida) && conversoes.comparaDatas(dataEntrada, datasaida)) {
+                            editDataSaida.requestFocus();
+                            res = true;
+                            msg = "Data saida tem que ser uma data superior a data de entrada.";
+                        }
+                    }
                 }
             }
         }
 
         if (res) {
-            AlertDialog.Builder ab = new AlertDialog.Builder(this);
-            ab.setTitle("Aviso");
-            ab.setMessage("Há campos invalidos ou em  branco!");
-            ab.setNeutralButton("OK", null);
-            ab.show();
+            criaMsg(msg);
         }
 
         return res;
+    }
+
+    private void criaMsg(String msg) {
+        AlertDialog.Builder ab = new AlertDialog.Builder(this);
+        ab.setTitle("Aviso");
+        ab.setMessage(msg);
+        ab.setNeutralButton("OK", null);
+        ab.show();
     }
 
     //Código do calendario
@@ -219,9 +246,17 @@ public class EditarCorteActivity extends AppCompatActivity {
     }
 
     public void excluirCorte(View view) {
-        criaProgress();
-        new CorteBD().apagar(this.corte.getCodigoCorte());
-        finish();
+        if (new RacaoBD().isUserCorte(this.corte.getCodigoCorte())){
+            criaMsg("Esse lote esta sendo usado em um lote de Ração.");
+        } else {
+            if (new VacinaBD().isUserCorte(this.corte.getCodigoCorte())) {
+                criaMsg("Esse lote esta sendo usado em um tratamento.");
+            } else {
+                criaProgress();
+                new CorteBD().apagar(this.corte.getCodigoCorte());
+                finish();
+            }
+        }
     }
 
     @Override

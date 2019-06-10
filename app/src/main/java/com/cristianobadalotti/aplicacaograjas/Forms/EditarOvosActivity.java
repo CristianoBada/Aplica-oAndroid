@@ -18,6 +18,7 @@ import android.widget.Toast;
 import android.support.v7.app.AlertDialog;
 
 import com.cristianobadalotti.aplicacaograjas.Entidades.Ovos;
+import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.IncubatorioBD;
 import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.OvosBD;
 import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.PosturaBD;
 import com.cristianobadalotti.aplicacaograjas.R;
@@ -36,12 +37,12 @@ public class EditarOvosActivity extends AppCompatActivity {
     //Codigo do calendario
 
     private EditText editData;
-    private Spinner spinnerPostura;
     private EditText editQuantidade;
     private EditText editQualidade;
 
     private Ovos ovos;
 
+    private Spinner spinnerPostura;
     private ArrayList<String> lista;
     private int pos = 0;
 
@@ -61,10 +62,11 @@ public class EditarOvosActivity extends AppCompatActivity {
 
         criaListaPostura();
 
-        editQualidade = (EditText)findViewById(R.id.editTextQualidadeOvos);
-        editQuantidade = (EditText)findViewById(R.id.editTextQuantidadeOvos);
+        editQualidade = (EditText) findViewById(R.id.editTextQualidadeOvos);
+        editQuantidade = (EditText) findViewById(R.id.editTextQuantidadeOvos);
 
-        editData= (EditText)findViewById(R.id.editTextDataOvos);
+        editData = (EditText) findViewById(R.id.editTextDataOvos);
+        editData.setKeyListener(null);
 
         editData.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,8 +79,8 @@ public class EditarOvosActivity extends AppCompatActivity {
 
     }
 
-    private void criaListaPostura(){
-        lista = new PosturaBD().getListaString();
+    private void criaListaPostura() {
+        lista = new PosturaBD().getListaString(true);
         spinnerPostura = (Spinner) findViewById(R.id.spinnerOPostura);
         List<String> list = lista;
         pos = 0;
@@ -126,8 +128,8 @@ public class EditarOvosActivity extends AppCompatActivity {
             if ((bundle != null) && (bundle.containsKey("OVOS"))) {
                 ovos = (Ovos) bundle.getSerializable("OVOS");
 
-                this.editQualidade.setText(ovos.getQualidade()+"");
-                this.editQuantidade.setText(ovos.getQuantidade()+"");
+                this.editQualidade.setText(ovos.getQualidade() + "");
+                this.editQuantidade.setText(ovos.getQuantidade() + "");
                 this.editData.setText(ovos.getData());
                 this.spinnerPostura.setSelection(MetodosComuns.achaPosicao(lista, ovos.getPostura() + " " + ovos.getTipoAve()));
             } else {
@@ -139,7 +141,7 @@ public class EditarOvosActivity extends AppCompatActivity {
     }
 
     private void opcaoExcluirOvos() {
-        Button button = (Button)findViewById(R.id.buttonExcluirOvos);
+        Button button = (Button) findViewById(R.id.buttonExcluirOvos);
         button.setVisibility(View.INVISIBLE);
     }
 
@@ -147,29 +149,37 @@ public class EditarOvosActivity extends AppCompatActivity {
 
         String data = editData.getText().toString();
         String quant = editQuantidade.getText().toString();
-
-
+        String msg = "";
         boolean res = false;
-
-
-            if (res = Validacoes.isCampoVazio(data)) {
-                editData.requestFocus();
+        if (res = Validacoes.isCampoVazio(data)) {
+            editData.requestFocus();
+            msg = "Há campos invalidos ou em  branco!";
+        } else {
+            if (res = Validacoes.isCampoVazio(quant)) {
+                editQuantidade.requestFocus();
+                msg = "Há campos invalidos ou em  branco!";
             } else {
-                if (res = Validacoes.isCampoVazio(quant)) {
-                    editQuantidade.requestFocus();
+                int quanti = Integer.parseInt(quant);
+                if (quanti < 1) {
+                    msg = "Quantidade não pode ser menor ou igual a zero.";
+                    res = true;
                 }
             }
-
+        }
 
         if (res) {
-            AlertDialog.Builder ab = new AlertDialog.Builder(this);
-            ab.setTitle("Aviso");
-            ab.setMessage("Há campos invalidos ou em  branco!");
-            ab.setNeutralButton("OK", null);
-            ab.show();
+            criaMsg(msg);
         }
 
         return res;
+    }
+
+    private void criaMsg(String msg) {
+        AlertDialog.Builder ab = new AlertDialog.Builder(this);
+        ab.setTitle("Aviso");
+        ab.setMessage(msg);
+        ab.setNeutralButton("OK", null);
+        ab.show();
     }
 
     private DatePickerDialog.OnDateSetListener mDateSetListener =
@@ -188,9 +198,13 @@ public class EditarOvosActivity extends AppCompatActivity {
     }
 
     public void excluirOvos(View view) {
-        criaProgress();
-        new OvosBD().apagar(this.ovos.getCodigo());
-        finish();
+        if (new IncubatorioBD().isUserOvos(this.ovos.getCodigo())) {
+            criaMsg("Esse lote esta sendo usado na incubação.");
+        } else {
+            criaProgress();
+            new OvosBD().apagar(this.ovos.getCodigo());
+            finish();
+        }
     }
 
     @Override

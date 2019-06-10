@@ -35,12 +35,13 @@ public class TipoAveBD extends _Default {
         BD bd = new BD();
         int ret = 0;
         try {
-            String comando = String.format("SELECT * FROM tipo_ave WHERE nome_ave=%s;", nome);
+            String comando = String.format("SELECT * FROM tipo_ave WHERE nome_ave='%s';", nome);
             ResultSet resultSet = bd.select(comando);
 
             if (resultSet != null) {
-
-                   ret = resultSet.getInt("tempo_chocagem");
+                while (resultSet.next()) {
+                    ret = resultSet.getInt("tempo_chocagem");
+                }
             }
 
         } catch (Exception e) {

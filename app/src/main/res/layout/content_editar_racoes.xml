@@ -83,8 +83,8 @@
         android:layout_marginTop="8dp"
         android:onClick="salvarRacao"
         android:text="@string/str_Salvar"
-        app:layout_constraintStart_toStartOf="@+id/editTextDataRacao"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDataRacao" />
+        app:layout_constraintStart_toStartOf="@+id/spinnerRacaoCorte"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerRacaoCorte" />
 
     <Button
         android:id="@+id/buttonExcluirRacao"
@@ -96,7 +96,7 @@
         android:onClick="excluirRacao"
         android:text="@string/str_Excluir"
         app:layout_constraintStart_toEndOf="@+id/button19"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDataRacao" />
+        app:layout_constraintTop_toBottomOf="@+id/spinnerRacaoCorte" />
 
     <Button
         android:id="@+id/button19"
@@ -108,5 +108,43 @@
         android:onClick="voltarMenu"
         android:text="@string/voltar"
         app:layout_constraintStart_toEndOf="@+id/buttonSalvarRacao"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerRacaoCorte" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Código postura:"
+        app:layout_constraintEnd_toEndOf="@+id/editTextDataRacao"
+        app:layout_constraintStart_toStartOf="@+id/editTextDataRacao"
         app:layout_constraintTop_toBottomOf="@+id/editTextDataRacao" />
+
+    <Spinner
+        android:id="@+id/spinnerRacaoPostura"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/textView17"
+        app:layout_constraintStart_toStartOf="@+id/textView17"
+        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
+    <Spinner
+        android:id="@+id/spinnerRacaoCorte"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/textView20"
+        app:layout_constraintStart_toStartOf="@+id/textView20"
+        app:layout_constraintTop_toBottomOf="@+id/textView20" />
+
+    <TextView
+        android:id="@+id/textView20"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Código corte:"
+        app:layout_constraintEnd_toEndOf="@+id/spinnerRacaoPostura"
+        app:layout_constraintStart_toStartOf="@+id/spinnerRacaoPostura"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerRacaoPostura" />
 </android.support.constraint.ConstraintLayout>

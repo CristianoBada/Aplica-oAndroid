@@ -40,6 +40,9 @@ public class VacinaAdapter extends RecyclerView.Adapter<ViewHolderVacina> {
             viewHolder.textTipo.setText("Tipo de tratamento: " + vacina.getTipoTratamento());
             viewHolder.textData.setText("Data: " + vacina.getDataTratamento());
             viewHolder.textDetalhe.setText("Observação: " + vacina.getDetalhe());
+            viewHolder.textCodigo.setText("Código: " + vacina.getCodigoVacina());
+            viewHolder.textCodigoPostura.setText("Código postura: " + vacina.getCodigoPostura());
+            viewHolder.textCodigoCorte.setText("Código corte: " + vacina.getCodigoCorte());
         }
     }
 

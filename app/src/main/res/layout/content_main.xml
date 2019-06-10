@@ -11,7 +11,7 @@
     <Button
         android:id="@+id/buttonPostura"
         android:layout_width="0dp"
-        android:layout_height="147dp"
+        android:layout_height="130dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
@@ -24,7 +24,7 @@
     <Button
         android:id="@+id/button2"
         android:layout_width="0dp"
-        android:layout_height="145dp"
+        android:layout_height="130dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"

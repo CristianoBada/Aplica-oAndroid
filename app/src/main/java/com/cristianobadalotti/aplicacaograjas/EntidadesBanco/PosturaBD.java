@@ -45,7 +45,7 @@ public class PosturaBD extends _Default {
         return lista;
     }
 
-    public ArrayList<String> getListaString() {
+    public ArrayList<String> getListaString(boolean mostraTA) {
         BD bd = new BD();
         ArrayList<String> lista = new ArrayList<>();
 
@@ -54,7 +54,11 @@ public class PosturaBD extends _Default {
 
             if (resultSet != null) {
                 while (resultSet.next()) {
-                    lista.add(resultSet.getInt("codigo") + " " + resultSet.getString("tipoave"));
+                    if (mostraTA) {
+                        lista.add(resultSet.getInt("codigo") + " " + resultSet.getString("tipoave"));
+                    } else {
+                        lista.add(resultSet.getInt("codigo") + "");
+                    }
                 }
             }
 
@@ -87,7 +91,7 @@ public class PosturaBD extends _Default {
                             "SET  observacao='%s', entrada2='%s', saida2='%s', maximo=%d, quantidade='%d', tipoave='%s', entrada='%s', saida='%s'" +
                             " WHERE codigo=%d;",
                     postura.getComentario(), postura.getDataentrada(), postura.getDatasaida(), postura.getMaximoAves(),
-                    postura.getQuantidade(), postura.getTipoAve(),
+                    postura.getQuantidade(), postura.getTipoAve(), new Conversoes().convertDateBRtoDataUS(postura.getDataentrada()),
                     new Conversoes().convertDateBRtoDataUS(postura.getDatasaida()),
                     postura.getCodigoPostura());
         }

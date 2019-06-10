@@ -60,9 +60,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="Observações:"
-        app:layout_constraintEnd_toEndOf="@+id/editTextDataVacina"
-        app:layout_constraintStart_toStartOf="@+id/editTextDataVacina"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDataVacina" />
+        app:layout_constraintEnd_toEndOf="@+id/spinnerVacinaCorte"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/spinnerVacinaCorte"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerVacinaCorte" />
 
     <EditText
         android:id="@+id/editTextDetalheVacina"
@@ -108,4 +109,42 @@
         android:text="VOLTAR"
         app:layout_constraintStart_toEndOf="@+id/buttonSalvarVacina"
         app:layout_constraintTop_toBottomOf="@+id/editTextDetalheVacina" />
+
+    <TextView
+        android:id="@+id/textView37"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Código postura:"
+        app:layout_constraintEnd_toEndOf="@+id/editTextDataVacina"
+        app:layout_constraintStart_toStartOf="@+id/editTextDataVacina"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDataVacina" />
+
+    <TextView
+        android:id="@+id/textView38"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Código corte:"
+        app:layout_constraintEnd_toEndOf="@+id/spinnerVacinaPostura"
+        app:layout_constraintStart_toStartOf="@+id/spinnerVacinaPostura"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerVacinaPostura" />
+
+    <Spinner
+        android:id="@+id/spinnerVacinaPostura"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/textView37"
+        app:layout_constraintStart_toStartOf="@+id/textView37"
+        app:layout_constraintTop_toBottomOf="@+id/textView37" />
+
+    <Spinner
+        android:id="@+id/spinnerVacinaCorte"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="@+id/textView38"
+        app:layout_constraintStart_toStartOf="@+id/textView38"
+        app:layout_constraintTop_toBottomOf="@+id/textView38" />
 </android.support.constraint.ConstraintLayout>

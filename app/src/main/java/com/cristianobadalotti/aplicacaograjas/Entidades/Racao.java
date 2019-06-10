@@ -7,8 +7,8 @@ public class Racao implements Serializable {
     private String tipoRacao;
     private Integer quantidade;
     private String dataEntrada;
-    private int codigoPostura;
-    private int codigoCorte;
+    private int codigoPostura = 0;
+    private int codigoCorte = 0;
 
     public int getCodigoRacao() {
         return codigoRacao;

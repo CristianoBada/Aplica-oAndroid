@@ -62,11 +62,12 @@ public class EditarIncubatorioActivity extends AppCompatActivity {
 
         criaListaOvos();
 
-        editTemperatura = (EditText)findViewById(R.id.editTextTemperaturaIncubatorio);
-        editUmidade = (EditText)findViewById(R.id.editTextUmidadeIncubatorio);
-        editMortalidade = (EditText)findViewById(R.id.editTextMortalidadeIncubatorio);
+        editTemperatura = (EditText) findViewById(R.id.editTextTemperaturaIncubatorio);
+        editUmidade = (EditText) findViewById(R.id.editTextUmidadeIncubatorio);
+        editMortalidade = (EditText) findViewById(R.id.editTextMortalidadeIncubatorio);
 
-        editData= (EditText)findViewById(R.id.editTextDataIncubatorio);
+        editData = (EditText) findViewById(R.id.editTextDataIncubatorio);
+        editData.setKeyListener(null);
 
         editData.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,12 +111,14 @@ public class EditarIncubatorioActivity extends AppCompatActivity {
                 this.incubatorio.setUmidade(Integer.parseInt(this.editUmidade.getText().toString()));
             }
             this.incubatorio.setTipoAve(new OvosBD().getLista().get(pos).getTipoAve());
-            this.incubatorio.setTemperatura(Integer.parseInt(this.editTemperatura.getText().toString()));
+            this.incubatorio.setTemperatura(Double.parseDouble(this.editTemperatura.getText().toString()));
             if (!this.editMortalidade.getText().toString().isEmpty()) {
                 this.incubatorio.setMortalidade(Integer.parseInt(this.editMortalidade.getText().toString()));
             }
             this.incubatorio.setDataInicio(this.editData.getText().toString());
-            this.incubatorio.setTempoChocar(new TipoAveBD().getTempoChocar(new OvosBD().getLista().get(pos).getTipoAve()));
+            String tipoAve = new OvosBD().getLista().get(pos).getTipoAve();
+            int tempoC = new TipoAveBD().getTempoChocar(tipoAve);
+            this.incubatorio.setTempoChocar(tempoC);
 
             IncubatorioBD incubatorioBD = new IncubatorioBD();
             incubatorioBD.salvar(this.incubatorio);
@@ -134,10 +137,10 @@ public class EditarIncubatorioActivity extends AppCompatActivity {
             if ((bundle != null) && (bundle.containsKey("INCUBATORIO"))) {
                 incubatorio = (Incubatorio) bundle.getSerializable("INCUBATORIO");
 
-                this.editData.setText(incubatorio.getDataInicio()+"");
-                this.editMortalidade.setText(incubatorio.getMortalidade()+"");
-                this.editTemperatura.setText(incubatorio.getTemperatura()+"");
-                this.editUmidade.setText(incubatorio.getUmidade()+"");
+                this.editData.setText(incubatorio.getDataInicio() + "");
+                this.editMortalidade.setText(incubatorio.getMortalidade() + "");
+                this.editTemperatura.setText(incubatorio.getTemperatura() + "");
+                this.editUmidade.setText(incubatorio.getUmidade() + "");
                 this.spinnerOvos.setSelection(MetodosComuns.achaPosicao(new OvosBD().getListaString(), incubatorio.getCodigoOvos() + " " + incubatorio.getTipoAve()));
             } else {
                 opcaoExcluirIncubatorio();
@@ -148,7 +151,7 @@ public class EditarIncubatorioActivity extends AppCompatActivity {
     }
 
     private void opcaoExcluirIncubatorio() {
-        Button button = (Button)findViewById(R.id.buttonExcluirIncubatorio);
+        Button button = (Button) findViewById(R.id.buttonExcluirIncubatorio);
         button.setVisibility(View.INVISIBLE);
     }
 
@@ -158,23 +161,40 @@ public class EditarIncubatorioActivity extends AppCompatActivity {
         String data = editData.getText().toString();
 
         boolean res = false;
+        String msg = "";
 
-
-            if (res = Validacoes.isCampoVazio(temperatura)) {
-                editTemperatura.requestFocus();
+        if (res = Validacoes.isCampoVazio(temperatura)) {
+            editTemperatura.requestFocus();
+            msg = "Há campos invalidos ou em  branco!";
+        } else {
+            if (res = Validacoes.isCampoVazio(data)) {
+                editData.requestFocus();
+                msg = "Há campos invalidos ou em  branco!";
             } else {
-
-                    if (res = Validacoes.isCampoVazio(data)) {
-                        editData.requestFocus();
+                Double tempe = Double.parseDouble(temperatura);
+                if (tempe > 38.0 ||  tempe < 36.8) {
+                    editTemperatura.requestFocus();
+                    msg = "A temperatura tem que ser entre 36,8°C e 38°C. Recomenda-se entre 37,4°C e 37,8°C!";
+                    res = true;
+                } else {
+                    String um = editUmidade.getText().toString();
+                    if (!Validacoes.isCampoVazio(um)) {
+                        int umidade = Integer.parseInt(um);
+                        if (umidade != 0 && (umidade < 65 || umidade > 75)) {
+                            editUmidade.requestFocus();
+                            msg = "A umidade relativa do ar deve se manter entre 65% e 75%.";
+                            res = true;
+                        }
                     }
 
-
+                }
+            }
         }
 
         if (res) {
             AlertDialog.Builder ab = new AlertDialog.Builder(this);
             ab.setTitle("Aviso");
-            ab.setMessage("Há campos invalidos ou em  branco!");
+            ab.setMessage(msg);
             ab.setNeutralButton("OK", null);
             ab.show();
         }

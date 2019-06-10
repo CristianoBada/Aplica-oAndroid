@@ -18,10 +18,14 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.cristianobadalotti.aplicacaograjas.Entidades.Postura;
+import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.OvosBD;
 import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.PosturaBD;
+import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.RacaoBD;
 import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.TipoAveBD;
+import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.VacinaBD;
 import com.cristianobadalotti.aplicacaograjas.R;
 import com.cristianobadalotti.aplicacaograjas.Utilitarios.Calendario;
+import com.cristianobadalotti.aplicacaograjas.Utilitarios.Conversoes;
 import com.cristianobadalotti.aplicacaograjas.Utilitarios.MetodosComuns;
 import com.cristianobadalotti.aplicacaograjas.Utilitarios.Validacoes;
 
@@ -69,6 +73,7 @@ public class EditarPosturaActivity extends AppCompatActivity {
         List<String> list = lista;
         tipoAve = lista.get(0);
 
+
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
@@ -86,12 +91,14 @@ public class EditarPosturaActivity extends AppCompatActivity {
             }
         });
 
-        editMaxAves = (EditText)findViewById(R.id.editTextMaxAves);
-        editObservacao = (EditText)findViewById(R.id.editTextObservacao);
-        editQuantidade = (EditText)findViewById(R.id.editTextQuantidade);
+        editMaxAves = (EditText) findViewById(R.id.editTextMaxAves);
+        editObservacao = (EditText) findViewById(R.id.editTextObservacao);
+        editQuantidade = (EditText) findViewById(R.id.editTextQuantidade);
 
-        editDataEntrada = (EditText)findViewById(R.id.editTextDataEntrada);
-        editDataSaida = (EditText)findViewById(R.id.editTextDataSaida);
+        editDataEntrada = (EditText) findViewById(R.id.editTextDataEntrada);
+        editDataEntrada.setKeyListener(null);
+        editDataSaida = (EditText) findViewById(R.id.editTextDataSaida);
+        editDataSaida.setKeyListener(null);
 
         editDataEntrada.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,10 +145,10 @@ public class EditarPosturaActivity extends AppCompatActivity {
             if ((bundle != null) && (bundle.containsKey("POSTURA"))) {
                 postura = (Postura) bundle.getSerializable("POSTURA");
 
-                this.editMaxAves.setText(postura.getMaximoAves()+"");
-                this.editQuantidade.setText(postura.getQuantidade()+"");
+                this.editMaxAves.setText(postura.getMaximoAves() + "");
+                this.editQuantidade.setText(postura.getQuantidade() + "");
                 this.editDataSaida.setText(postura.getDatasaida());
-                this.editDataEntrada.setText(postura.getDatasaida());
+                this.editDataEntrada.setText(postura.getDataentrada());
                 this.editObservacao.setText(postura.getComentario());
                 this.spinnerTipoAve.setSelection(MetodosComuns.achaPosicao(new TipoAveBD().getListaString(), postura.getTipoAve()));
             } else {
@@ -153,7 +160,7 @@ public class EditarPosturaActivity extends AppCompatActivity {
     }
 
     private void opcaoExcluir() {
-        Button button = (Button)findViewById(R.id.buttonExcluirPostura);
+        Button button = (Button) findViewById(R.id.buttonExcluirPostura);
         button.setVisibility(View.INVISIBLE);
     }
 
@@ -166,28 +173,41 @@ public class EditarPosturaActivity extends AppCompatActivity {
 
         boolean res = false;
 
+        String msg = "";
+
         if (res = Validacoes.isCampoVazio(quant)) {
             editQuantidade.requestFocus();
+            msg = "Há campos invalidos ou em  branco!";
         } else {
             if (res = Validacoes.isCampoVazio(max)) {
                 editMaxAves.requestFocus();
+                msg = "Há campos invalidos ou em  branco!";
             } else {
                 if (res = Validacoes.isCampoVazio(dataEntrada)) {
                     editDataEntrada.requestFocus();
+                    msg = "Há campos invalidos ou em  branco!";
                 } else {
-                    if (res = Validacoes.isCampoVazio(datasaida)) {
-                        editDataSaida.requestFocus();
+                    int qu = Integer.parseInt(quant);
+                    int m = Integer.parseInt(max);
+                    if (qu > m) {
+                        editMaxAves.requestFocus();
+                        msg = "Numero maximo de aves não pode ser inferior a quantidade.";
+                        res = true;
+                    } else {
+                        Conversoes conversoes = new Conversoes();
+                        if (!Validacoes.isCampoVazio(datasaida) && conversoes.comparaDatas(dataEntrada, datasaida)) {
+                            editDataSaida.requestFocus();
+                            res = true;
+                            msg = "Data saida tem que ser uma data superior a data de entrada.";
+                        }
                     }
+
                 }
             }
         }
 
         if (res) {
-            AlertDialog.Builder ab = new AlertDialog.Builder(this);
-            ab.setTitle("Aviso");
-            ab.setMessage("Há campos invalidos ou em  branco!");
-            ab.setNeutralButton("OK", null);
-            ab.show();
+            criaMsg(msg);
         }
 
         return res;
@@ -195,7 +215,7 @@ public class EditarPosturaActivity extends AppCompatActivity {
 
     //Código do calendario
     private void colocar_fecha() {
-        if (id_date == DATE_ID){
+        if (id_date == DATE_ID) {
             editDataEntrada.setText(calendario.getText());
         } else {
             editDataSaida.setText(calendario.getText());
@@ -218,10 +238,30 @@ public class EditarPosturaActivity extends AppCompatActivity {
     }
 
     public void excluirPostura(View view) {
-        criaProgress();
-        PosturaBD posturaBD = new PosturaBD();
-        posturaBD.apagar(this.postura.getCodigoPostura());
-        finish();
+        if (new OvosBD().isUserPostura(this.postura.getCodigoPostura())) {
+            criaMsg("Esse lote esta sendo usado em um lote de Ovos.");
+        } else {
+            if (new RacaoBD().isUserPostura(this.postura.getCodigoPostura())) {
+                criaMsg("Esse lote esta sendo usado em um lote de Ração.");
+            } else {
+                if (new VacinaBD().isUserPostura(this.postura.getCodigoPostura())) {
+                    criaMsg("Esse lote esta sendo usado em um tratamento.");
+                } else {
+                    criaProgress();
+                    PosturaBD posturaBD = new PosturaBD();
+                    posturaBD.apagar(this.postura.getCodigoPostura());
+                    finish();
+                }
+            }
+        }
+    }
+
+    private void criaMsg(String msg) {
+        AlertDialog.Builder ab = new AlertDialog.Builder(this);
+        ab.setTitle("Aviso");
+        ab.setMessage(msg);
+        ab.setNeutralButton("OK", null);
+        ab.show();
     }
 
     @Override

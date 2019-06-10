@@ -24,6 +24,8 @@ public class RacaoBD extends _Default {
                     racao.setDataEntrada(resultSet.getString("data2"));
                     racao.setQuantidade(resultSet.getInt("quantidade"));
                     racao.setTipoRacao(resultSet.getString("tiporacao"));
+                    racao.setCodigoCorte(resultSet.getInt("corte"));
+                    racao.setCodigoPostura(resultSet.getInt("postura"));
 
                     lista.add(racao);
                     racao = null;
@@ -38,6 +40,55 @@ public class RacaoBD extends _Default {
         return lista;
     }
 
+
+    public boolean isUserPostura( int codigo) {
+        BD bd = new BD();
+        ArrayList<String> lista = new ArrayList<>();
+
+        try {
+            String comando = String.format("SELECT * FROM racao WHERE postura=%d;", codigo);
+            ResultSet resultSet = bd.select(comando);
+
+            if (resultSet != null) {
+                while (resultSet.next()) {
+                    lista.add(resultSet.getInt("codigo") + "");
+                }
+            }
+
+        } catch (Exception e) {
+            this._menssagem = e.getMessage();
+            this._status = false;
+        }
+        if (lista.size() > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isUserCorte( int codigo) {
+        BD bd = new BD();
+        ArrayList<String> lista = new ArrayList<>();
+
+        try {
+            String comando = String.format("SELECT * FROM racao WHERE corte=%d;", codigo);
+            ResultSet resultSet = bd.select(comando);
+
+            if (resultSet != null) {
+                while (resultSet.next()) {
+                    lista.add(resultSet.getInt("codigo") + "");
+                }
+            }
+
+        } catch (Exception e) {
+            this._menssagem = e.getMessage();
+            this._status = false;
+        }
+        if (lista.size() > 0) {
+            return true;
+        }
+        return false;
+    }
+
     public void apagar(int codigo) {
         String comando = String.format("DELETE FROM racao WHERE codigo=%d;", codigo);
 
@@ -50,15 +101,17 @@ public class RacaoBD extends _Default {
     public void salvar(Racao racao) {
         String comando = "";
         String dataC = new Conversoes().convertDateBRtoDataUS(racao.getDataEntrada());
-        if (racao.getCodigoRacao() == -1) { ////codigo_racao, data_entrada, quantidade, codigo_corte, codigo_postura, tipo_racao)
-            comando = String.format("INSERT INTO racao (data2, quantidade, tiporacao, data) " +
-                            "VALUES ('%s', %d, '%s', '%s');",
-                    racao.getDataEntrada(), racao.getQuantidade(), racao.getTipoRacao(), dataC);
+        if (racao.getCodigoRacao() == -1) {
+            comando = String.format("INSERT INTO racao (data2, quantidade, tiporacao, data, corte, postura) " +
+                            "VALUES ('%s', %d, '%s', '%s', %d, %d);",
+                    racao.getDataEntrada(), racao.getQuantidade(), racao.getTipoRacao(), dataC,
+                    racao.getCodigoCorte(), racao.getCodigoPostura());
         } else {
             comando = String.format("UPDATE racao " +
-                            "SET  data2='%s', quantidade=%d, tiporacao='%s', data='%s'" +
+                            "SET  data2='%s', quantidade=%d, tiporacao='%s', data='%s', corte=%d, postura=%d" +
                             " WHERE codigo=%d;",
-                    racao.getDataEntrada(), racao.getQuantidade(), racao.getTipoRacao(), dataC, racao.getCodigoRacao());
+                    racao.getDataEntrada(), racao.getQuantidade(), racao.getTipoRacao(), dataC,
+                    racao.getCodigoCorte(), racao.getCodigoPostura(), racao.getCodigoRacao());
         }
 
         BD bd = new BD();

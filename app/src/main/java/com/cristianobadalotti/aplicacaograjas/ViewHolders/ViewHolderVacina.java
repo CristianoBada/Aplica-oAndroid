@@ -19,6 +19,9 @@ public class ViewHolderVacina extends RecyclerView.ViewHolder {
     public TextView textTipo;
     public TextView textData;
     public TextView textDetalhe;
+    public TextView textCodigo;
+    public TextView textCodigoCorte;
+    public TextView textCodigoPostura;
     private ArrayList<Vacina> dados;
 
     public ViewHolderVacina(@NonNull View itemView, final Context context) {
@@ -27,6 +30,9 @@ public class ViewHolderVacina extends RecyclerView.ViewHolder {
         textTipo = itemView.findViewById(R.id.textViewTipoVacina);
         textData = itemView.findViewById(R.id.textViewDataVacina);
         textDetalhe = itemView.findViewById(R.id.textViewDetalheVacina);
+        textCodigo = itemView.findViewById(R.id.textViewCodigoVacina);
+        textCodigoCorte = itemView.findViewById(R.id.textViewVacinaCorte);
+        textCodigoPostura = itemView.findViewById(R.id.textViewVacinaPostura);
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -73,6 +73,7 @@ public class EditarFinanceiroActivity extends AppCompatActivity {
                 showDialog(DATE_ID);
             }
         });
+        editData.setKeyListener(null);
 
         verificaParametros();
     }

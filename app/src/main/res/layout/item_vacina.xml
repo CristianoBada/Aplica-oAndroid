@@ -12,6 +12,12 @@
         android:background="?android:attr/listDivider" />
 
     <TextView
+        android:id="@+id/textViewCodigoVacina"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    <TextView
         android:id="@+id/textViewTipoVacina"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,6 +25,18 @@
 
     <TextView
         android:id="@+id/textViewDataVacina"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/textViewVacinaPostura"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/textViewVacinaCorte"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="TextView" />

@@ -22,6 +22,8 @@ import android.widget.Toast;
 import com.cristianobadalotti.aplicacaograjas.Entidades.Incubatorio;
 import com.cristianobadalotti.aplicacaograjas.Entidades.Racao;
 import com.cristianobadalotti.aplicacaograjas.Entidades.TipoAve;
+import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.CorteBD;
+import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.PosturaBD;
 import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.RacaoBD;
 import com.cristianobadalotti.aplicacaograjas.R;
 import com.cristianobadalotti.aplicacaograjas.Utilitarios.Calendario;
@@ -45,6 +47,14 @@ public class EditarRacoesActivity extends AppCompatActivity {
     private Racao racao;
     private ProgressDialog progressDialog;
 
+    private Spinner spinnerPostura;
+    private ArrayList<String> lista;
+    private int pos = 0;
+
+    private Spinner spinnerCorte;
+    private ArrayList<String> lista2;
+    private int pos2 = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,10 +67,14 @@ public class EditarRacoesActivity extends AppCompatActivity {
 
         calendario = new Calendario();
 
+        criaListaPostura();
+        criaListaCorte();
+
         editQuantidade = (EditText)findViewById(R.id.editTextQuantidadeRacao);
         editTipo = (EditText)findViewById(R.id.editTextTipoRacao);
 
         editData= (EditText)findViewById(R.id.editTextDataRacao);
+        editData.setKeyListener(null);
 
         editData.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,12 +86,72 @@ public class EditarRacoesActivity extends AppCompatActivity {
         verificaParametros();
     }
 
+    private void criaListaPostura(){
+        lista = new PosturaBD().getListaString(false);
+        spinnerPostura = (Spinner) findViewById(R.id.spinnerRacaoPostura);
+        lista.add(0, "0");
+        List<String> list = lista;
+        pos = 0;
+
+        ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, list);
+        dataAdapter2.setDropDownViewResource(android.R.layout.simple_list_item_1);
+        spinnerPostura.setAdapter(dataAdapter2);
+
+        spinnerPostura.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                pos = position;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void criaListaCorte(){
+        lista2 = new CorteBD().getListaString();
+        spinnerCorte = (Spinner) findViewById(R.id.spinnerRacaoCorte);
+        lista2.add(0, "0");
+        List<String> list = lista2;
+        pos2 = 0;
+
+        ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, list);
+        dataAdapter2.setDropDownViewResource(android.R.layout.simple_list_item_1);
+        spinnerCorte.setAdapter(dataAdapter2);
+
+        spinnerCorte.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                pos2 = position;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
     public void salvarRacao(View view) {
         if (!validaCampos()) {
             criaProgress();
             this.racao.setTipoRacao(this.editTipo.getText().toString());
             this.racao.setQuantidade(Integer.parseInt(this.editQuantidade.getText().toString()));
             this.racao.setDataEntrada(this.editData.getText().toString());
+            if (pos >0) {
+                this.racao.setCodigoPostura(new PosturaBD().getLista().get(pos - 1).getCodigoPostura());
+            } else {
+                this.racao.setCodigoPostura(pos);
+            }
+            if (pos2 >0) {
+                this.racao.setCodigoCorte(new CorteBD().getLista().get(pos2 -1).getCodigoCorte());
+            } else {
+                this.racao.setCodigoCorte(pos2);
+            }
 
             RacaoBD racaoBD = new RacaoBD();
             racaoBD.salvar(this.racao);
@@ -99,6 +173,8 @@ public class EditarRacoesActivity extends AppCompatActivity {
                 this.editTipo.setText(racao.getTipoRacao()+"");
                 this.editData.setText(racao.getDataEntrada()+"");
                 this.editQuantidade.setText(racao.getQuantidade()+"");
+                this.spinnerPostura.setSelection(MetodosComuns.achaPosicao(lista, racao.getCodigoPostura() + ""));
+                this.spinnerCorte.setSelection(MetodosComuns.achaPosicao(lista2, racao.getCodigoCorte() + ""));
             } else {
                 opcaoExcluirRacao();
             }
@@ -118,15 +194,19 @@ public class EditarRacoesActivity extends AppCompatActivity {
         String data = editData.getText().toString();
 
         boolean res = false;
+        String msg = "";
 
         if (res = Validacoes.isCampoVazio(tipo)) {
             editTipo.requestFocus();
+            msg = "Há campos invalidos ou em  branco!";
         } else {
             if (res = Validacoes.isCampoVazio(quant)) {
                 editQuantidade.requestFocus();
+                msg = "Há campos invalidos ou em  branco!";
             } else {
                 if (res = Validacoes.isCampoVazio(data)) {
                     editData.requestFocus();
+                    msg = "Há campos invalidos ou em  branco!";
                 }
             }
         }
@@ -134,7 +214,7 @@ public class EditarRacoesActivity extends AppCompatActivity {
         if (res) {
             AlertDialog.Builder ab = new AlertDialog.Builder(this);
             ab.setTitle("Aviso");
-            ab.setMessage("Há campos invalidos ou em  branco!");
+            ab.setMessage(msg);
             ab.setNeutralButton("OK", null);
             ab.show();
         }

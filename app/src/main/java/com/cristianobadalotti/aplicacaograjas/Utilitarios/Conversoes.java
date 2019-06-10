@@ -35,4 +35,21 @@ public class Conversoes {
 
         return dataBR;
     }
+    public boolean comparaDatas(String data1, String data2) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date date3 = sdf.parse(convertDateBRtoDataUS(data1));
+            Date date4 = sdf.parse(convertDateBRtoDataUS(data2));
+
+            if (date3.compareTo(date4) >= 0) {
+                return true;
+            }
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
 }

@@ -7,6 +7,8 @@ public class Vacina implements Serializable {
     private String dataTratamento;
     private String tipoTratamento;
     private String detalhe;
+    private int codigoPostura = 0;
+    private int codigoCorte = 0;
 
     public int getCodigoVacina() {
         return codigoVacina;
@@ -38,5 +40,21 @@ public class Vacina implements Serializable {
 
     public void setDetalhe(String detalhe) {
         this.detalhe = detalhe;
+    }
+
+    public int getCodigoPostura() {
+        return codigoPostura;
+    }
+
+    public void setCodigoPostura(int codigoPostura) {
+        this.codigoPostura = codigoPostura;
+    }
+
+    public int getCodigoCorte() {
+        return codigoCorte;
+    }
+
+    public void setCodigoCorte(int codigoCorte) {
+        this.codigoCorte = codigoCorte;
     }
 }

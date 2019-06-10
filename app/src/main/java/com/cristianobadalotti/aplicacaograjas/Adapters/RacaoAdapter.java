@@ -13,10 +13,11 @@ import android.widget.TextView;
 import com.cristianobadalotti.aplicacaograjas.Entidades.Racao;
 import com.cristianobadalotti.aplicacaograjas.Forms.EditarRacoesActivity;
 import com.cristianobadalotti.aplicacaograjas.R;
+import com.cristianobadalotti.aplicacaograjas.ViewHolders.ViewHolderRacao;
 
 import java.util.ArrayList;
 
-public class RacaoAdapter extends RecyclerView.Adapter<RacaoAdapter.ViewHolderRacao> {
+public class RacaoAdapter extends RecyclerView.Adapter<ViewHolderRacao> {
     private ArrayList<Racao> dados;
 
     public RacaoAdapter(ArrayList<Racao> dados) {
@@ -25,61 +26,33 @@ public class RacaoAdapter extends RecyclerView.Adapter<RacaoAdapter.ViewHolderRa
 
     @NonNull
     @Override
-    public RacaoAdapter.ViewHolderRacao onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public ViewHolderRacao onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater layoutInflater = LayoutInflater.from(viewGroup.getContext());
 
         View view = layoutInflater.inflate(R.layout.item_racao, viewGroup, false);
 
-        RacaoAdapter.ViewHolderRacao holderRacao = new RacaoAdapter.ViewHolderRacao(view, viewGroup.getContext());
+        ViewHolderRacao holderRacao = new ViewHolderRacao(view, viewGroup.getContext());
+        holderRacao.setDados(dados);
 
         return holderRacao;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RacaoAdapter.ViewHolderRacao viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolderRacao viewHolder, int i) {
 
         if ( (dados != null) && (dados.size() > 0)) {
             Racao racao = dados.get(i);
             viewHolder.textDataEntrada.setText("Data de Entrada: " + racao.getDataEntrada());
-            viewHolder.textQuantidade.setText("Quantidade de aves: " + racao.getQuantidade());
+            viewHolder.textQuantidade.setText("Quantidade: " + racao.getQuantidade() + " Kg");
             viewHolder.textTipoRacao.setText("Tipo de ração: " + racao.getTipoRacao());
+            viewHolder.textCodigo.setText("Código: " + racao.getCodigoRacao());
+            viewHolder.textCodigoPostura.setText("Código postura: " + racao.getCodigoPostura());
+            viewHolder.textCodigoCorte.setText("Código corte: " + racao.getCodigoCorte());
         }
     }
 
     @Override
     public int getItemCount() {
         return dados.size();
-    }
-
-    public class ViewHolderRacao extends RecyclerView.ViewHolder {
-
-        public TextView textQuantidade;
-        public TextView textTipoRacao;
-        public TextView textDataEntrada;
-
-        public ViewHolderRacao(@NonNull View itemView, final Context context) {
-            super(itemView);
-
-            textQuantidade = itemView.findViewById(R.id.textViewQuantidadeRacao);
-            textDataEntrada = itemView.findViewById(R.id.textViewDataRacao);
-            textTipoRacao = itemView.findViewById(R.id.textView324);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    if (dados.size() > 0) {
-
-                        Racao racao = dados.get(getLayoutPosition());
-
-                        Intent intent = new Intent(context, EditarRacoesActivity.class);
-
-                        intent.putExtra("RACAO", racao);
-
-                        ((AppCompatActivity) context).startActivityForResult(intent, 0);
-                    }
-                }
-            });
-        }
     }
 }

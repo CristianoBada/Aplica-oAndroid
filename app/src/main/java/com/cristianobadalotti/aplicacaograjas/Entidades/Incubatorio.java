@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Incubatorio implements Serializable {
 
     private int codigoIncubatorio = -1;
-    private Integer temperatura;
+    private Double temperatura;
     private Integer umidade = 0;
     private Integer tempoChocar;
     private String dataInicio;
@@ -21,11 +21,11 @@ public class Incubatorio implements Serializable {
         this.codigoIncubatorio = codigoIncubatorio;
     }
 
-    public Integer getTemperatura() {
+    public Double getTemperatura() {
         return temperatura;
     }
 
-    public void setTemperatura(Integer temperatura) {
+    public void setTemperatura(Double temperatura) {
         this.temperatura = temperatura;
     }
 

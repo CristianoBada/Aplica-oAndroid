@@ -44,6 +44,7 @@ public class CorteAdapter extends RecyclerView.Adapter<ViewHolderCorte> {
             viewHolder.textQuantidade.setText("Quantidade de aves: " + corte.getQuantidadeAves());
             viewHolder.textTipoAve.setText("Tipo de ave: " + corte.getTipoAve());
             viewHolder.textMortalidade.setText("Mortalidade: " + corte.getMortalidade());
+            viewHolder.textCodigo.setText("Código: " + corte.getCodigoCorte());
         }
     }
 

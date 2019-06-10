@@ -27,6 +27,7 @@ public class IncubatorioAdapter extends RecyclerView.Adapter<ViewHolderIncubator
         View view = layoutInflater.inflate(R.layout.item_incubatorio, viewGroup, false);
 
         ViewHolderIncubatorio holderIncubatorio = new ViewHolderIncubatorio(view, viewGroup.getContext());
+        holderIncubatorio.setDados(dados);
 
         return holderIncubatorio;
     }
@@ -39,9 +40,13 @@ public class IncubatorioAdapter extends RecyclerView.Adapter<ViewHolderIncubator
             viewHolder.textTipoAve.setText("Tipo de ave: " + incubatorio.getTipoAve());
             viewHolder.textMortalidade.setText("Mortalidade: " + incubatorio.getMortalidade());
             viewHolder.textDataInicio.setText("Data: " + incubatorio.getDataInicio());
-            viewHolder.textTempoChocar.setText("Tempo chocagem: " + incubatorio.getTempoChocar());
-            viewHolder.textUmidade.setText("Umidade: " + incubatorio.getUmidade());
-            viewHolder.textTemperatura.setText("Temperatura: " + incubatorio.getTemperatura());
+            viewHolder.textTempoChocar.setText("Tempo chocagem: " + incubatorio.getTempoChocar() + " dias");
+            if (incubatorio.getUmidade() > 0) {
+                viewHolder.textUmidade.setText("Umidade: " + incubatorio.getUmidade() + "%");
+            } else {
+                viewHolder.textUmidade.setText("Umidade: " + incubatorio.getUmidade());
+            }
+            viewHolder.textTemperatura.setText("Temperatura: " + incubatorio.getTemperatura() + "°C");
             viewHolder.textCodigoOvos.setText("Lode de ovos: " + incubatorio.getCodigoOvos());
             viewHolder.textCodigo.setText("Código: " + incubatorio.getCodigoIncubatorio());
         }

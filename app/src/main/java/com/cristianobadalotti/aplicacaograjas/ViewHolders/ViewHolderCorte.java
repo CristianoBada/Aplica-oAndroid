@@ -22,6 +22,7 @@ public class ViewHolderCorte extends RecyclerView.ViewHolder {
     public TextView textDataSaida;
     public TextView textTipoAve;
     public TextView textMortalidade;
+    public TextView textCodigo;
     private ArrayList<Corte> dados;
 
     public ViewHolderCorte(@NonNull View itemView, final Context context) {
@@ -34,6 +35,7 @@ public class ViewHolderCorte extends RecyclerView.ViewHolder {
         textDataSaida = itemView.findViewById(R.id.textViewDataSaidaCorte);
         textTipoAve = itemView.findViewById(R.id.textViewTipoAvesCorte);
         textMortalidade = itemView.findViewById(R.id.textViewMortalidadeCorte);
+        textCodigo = itemView.findViewById(R.id.textViewCodigoCorte);
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override

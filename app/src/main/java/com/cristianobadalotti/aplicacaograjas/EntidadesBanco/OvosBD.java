@@ -62,6 +62,30 @@ public class OvosBD extends _Default {
         return lista;
     }
 
+    public boolean isUserPostura( int codigo) {
+        BD bd = new BD();
+        ArrayList<String> lista = new ArrayList<>();
+
+        try {
+            String comando = String.format("SELECT * FROM ovos WHERE postura=%d;", codigo);
+            ResultSet resultSet = bd.select(comando);
+
+            if (resultSet != null) {
+                while (resultSet.next()) {
+                    lista.add(resultSet.getInt("codigo") + "");
+                }
+            }
+
+        } catch (Exception e) {
+            this._menssagem = e.getMessage();
+            this._status = false;
+        }
+        if (lista.size() > 0) {
+            return true;
+        }
+        return false;
+    }
+
     public void apagar(int codigo) {
         String comando = String.format("DELETE FROM ovos WHERE codigo=%d;", codigo);
 

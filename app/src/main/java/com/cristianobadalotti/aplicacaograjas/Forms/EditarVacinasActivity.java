@@ -9,16 +9,25 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.cristianobadalotti.aplicacaograjas.Entidades.Vacina;
+import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.CorteBD;
+import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.PosturaBD;
 import com.cristianobadalotti.aplicacaograjas.EntidadesBanco.VacinaBD;
 import com.cristianobadalotti.aplicacaograjas.R;
 import com.cristianobadalotti.aplicacaograjas.Utilitarios.Calendario;
+import com.cristianobadalotti.aplicacaograjas.Utilitarios.MetodosComuns;
 import com.cristianobadalotti.aplicacaograjas.Utilitarios.Validacoes;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EditarVacinasActivity extends AppCompatActivity {
 
@@ -34,6 +43,14 @@ public class EditarVacinasActivity extends AppCompatActivity {
     private Vacina vacina;
     private ProgressDialog progressDialog;
 
+    private Spinner spinnerPostura;
+    private ArrayList<String> lista;
+    private int pos = 0;
+
+    private Spinner spinnerCorte;
+    private ArrayList<String> lista2;
+    private int pos2 = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,10 +63,14 @@ public class EditarVacinasActivity extends AppCompatActivity {
 
         calendario = new Calendario();
 
+        criaListaPostura();
+        criaListaCorte();
+
         editDetalhe = (EditText) findViewById(R.id.editTextDetalheVacina);
         editTipo = (EditText) findViewById(R.id.editTextTipoVacina);
 
         editData = (EditText) findViewById(R.id.editTextDataVacina);
+        editData.setKeyListener(null);
 
         editData.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,12 +82,74 @@ public class EditarVacinasActivity extends AppCompatActivity {
         verificaParametros();
     }
 
+    private void criaListaPostura(){
+        lista = new PosturaBD().getListaString(false);
+        spinnerPostura = (Spinner) findViewById(R.id.spinnerVacinaPostura);
+        lista.add(0, "0");
+        List<String> list = lista;
+        pos = 0;
+
+        ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, list);
+        dataAdapter2.setDropDownViewResource(android.R.layout.simple_list_item_1);
+        spinnerPostura.setAdapter(dataAdapter2);
+
+        spinnerPostura.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                pos = position;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void criaListaCorte(){
+        lista2 = new CorteBD().getListaString();
+        spinnerCorte = (Spinner) findViewById(R.id.spinnerVacinaCorte);
+        lista2.add(0, "0");
+        List<String> list = lista2;
+        pos2 = 0;
+
+        ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, list);
+        dataAdapter2.setDropDownViewResource(android.R.layout.simple_list_item_1);
+        spinnerCorte.setAdapter(dataAdapter2);
+
+        spinnerCorte.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                pos2 = position;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+
     public void salvarVacina(View view) {
         if (!validaCampos()) {
             criaProgress();
             this.vacina.setTipoTratamento(this.editTipo.getText().toString());
             this.vacina.setDetalhe(this.editDetalhe.getText().toString());
             this.vacina.setDataTratamento(this.editData.getText().toString());
+            if (pos >0) {
+                this.vacina.setCodigoPostura(new PosturaBD().getLista().get(pos - 1).getCodigoPostura());
+            } else {
+                this.vacina.setCodigoPostura(pos);
+            }
+            if (pos2 >0) {
+                this.vacina.setCodigoCorte(new CorteBD().getLista().get(pos2 -1).getCodigoCorte());
+            } else {
+                this.vacina.setCodigoCorte(pos2);
+            }
+
             VacinaBD vacinaBD = new VacinaBD();
             vacinaBD.salvar(this.vacina);
 
@@ -87,6 +170,8 @@ public class EditarVacinasActivity extends AppCompatActivity {
                 this.editTipo.setText(vacina.getTipoTratamento());
                 this.editDetalhe.setText(vacina.getDetalhe());
                 this.editData.setText(vacina.getDataTratamento());
+                this.spinnerPostura.setSelection(MetodosComuns.achaPosicao(lista, vacina.getCodigoPostura() + ""));
+                this.spinnerCorte.setSelection(MetodosComuns.achaPosicao(lista2, vacina.getCodigoCorte() + ""));
             } else {
                 opcaoExcluirVacina();
             }
@@ -106,19 +191,26 @@ public class EditarVacinasActivity extends AppCompatActivity {
         String tipo = editTipo.getText().toString();
 
         boolean res;
-
+        String msg = "";
         if (res = Validacoes.isCampoVazio(tipo)) {
             editTipo.requestFocus();
+            msg = "Há campos invalidos ou em  branco!";
         } else {
             if (res = Validacoes.isCampoVazio(data)) {
                 editData.requestFocus();
+                msg = "Há campos invalidos ou em  branco!";
+            } else {
+                if (pos == 0 && pos2 == 0) {
+                    msg = "Um tratamento deve ser atribuido para um Lote de Postura ou Corte.";
+                    res = true;
+                }
             }
         }
 
         if (res) {
             AlertDialog.Builder ab = new AlertDialog.Builder(this);
             ab.setTitle("Aviso");
-            ab.setMessage("Há campos invalidos ou em  branco!");
+            ab.setMessage(msg);
             ab.setNeutralButton("OK", null);
             ab.show();
         }
